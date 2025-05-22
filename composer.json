@@ -24,7 +24,8 @@
         "symfony/http-foundation": "^7.2",
         "symfony/http-kernel": "^7.2",
         "symfony/serializer": "^7.2",
-        "symfony/twig-bundle": "^7.2"
+        "symfony/twig-bundle": "^7.2",
+        "ext-iconv": "*"
     },
     "require-dev": {
         "handcraftedinthealps/zendsearch": "^2.0",
