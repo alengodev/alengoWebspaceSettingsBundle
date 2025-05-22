@@ -15,14 +15,7 @@
             </params>
         </property>
 
-        <property name="typeKey" type="text_line">
-            <meta>
-                <title>alengo_webspace_settings.type_key</title>
-                <info_text>alengo_webspace_settings.type_key_info</info_text>
-            </meta>
-        </property>
-
-        <property name="type" type="single_select" mandatory="true">
+        <property name="type" type="single_select" mandatory="true" colspan="4">
             <meta>
                 <title>alengo_webspace_settings.type</title>
             </meta>
@@ -50,8 +43,20 @@
                             <title>Organization</title>
                         </meta>
                     </param>
+                    <param name="organizations">
+                        <meta>
+                            <title>Organizations</title>
+                        </meta>
+                    </param>
                 </param>
             </params>
+        </property>
+
+        <property name="typeKey" type="text_line" colspan="8">
+            <meta>
+                <title>alengo_webspace_settings.type_key</title>
+                <info_text>alengo_webspace_settings.type_key_info</info_text>
+            </meta>
         </property>
 
         <property name="dataString" type="text_line" visibleCondition="type == 'string' or type == 'stringLocale'">
@@ -69,6 +74,12 @@
         <property name="dataAccount" type="single_account_selection" visibleCondition="type == 'organization'">
             <meta>
                 <title>Organization</title>
+            </meta>
+        </property>
+
+        <property name="dataAccounts" type="account_selection" visibleCondition="type == 'organizations'">
+            <meta>
+                <title>Organizations</title>
             </meta>
         </property>
         

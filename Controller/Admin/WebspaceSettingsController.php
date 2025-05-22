@@ -133,6 +133,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             'organization' => [
                 $data['dataAccount'] ?? '',
             ],
+            'organizations' => $data['dataAccounts'] ?? [],
             default => [],
         };
     }
@@ -159,7 +160,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         $string = \iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
         $string = \preg_replace('/[^a-zA-Z0-9]+/', ' ', $string);
-        $string = \lcfirst(\str_replace(' ', '', \ucwords(\strtolower(\trim((string) $string)))));
+        $string = \lcfirst(\str_replace(' ', '', \ucwords(\trim((string) $string))));
 
         return $string;
     }
