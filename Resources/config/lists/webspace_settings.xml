@@ -3,32 +3,32 @@
     <key>webspace_settings</key>
 
     <properties>
-        <property name="id" visibility="no" searchability="yes" translation="sulu_admin.id">
+        <property name="id" visibility="no" sortable="false" translation="sulu_admin.id">
             <field-name>id</field-name>
             <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
         </property>
 
-        <property name="title" visibility="always" searchability="yes" translation="sulu_admin.title">
+        <property name="title" visibility="always" sortable="false" translation="sulu_admin.title">
             <field-name>title</field-name>
             <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
         </property>
 
-        <property name="typeKey" visibility="always" searchability="yes" translation="alengo_webspace_settings.type_key">
+        <property name="typeKey" visibility="always" sortable="false" translation="alengo_webspace_settings.type_key">
             <field-name>typeKey</field-name>
             <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
         </property>
 
-        <property name="type" visibility="always" searchability="yes" translation="alengo_webspace_settings.type">
+        <property name="type" visibility="always" sortable="false" translation="alengo_webspace_settings.type">
             <field-name>type</field-name>
             <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
         </property>
 
-        <property name="locale" visibility="always" searchability="yes" translation="sulu_custom_url.target_locale">
+        <property name="locale" visibility="always" sortable="false" translation="sulu_custom_url.target_locale">
             <field-name>locale</field-name>
             <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
         </property>
 
-        <property name="enabled" visibility="always" searchability="yes" type="bool" translation="sulu_admin.publish">
+        <property name="enabled" visibility="always" sortable="false" type="bool" translation="sulu_admin.publish">
             <field-name>enabled</field-name>
             <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
         </property>
@@ -41,7 +41,6 @@
             <field-name>changed</field-name>
             <entity-name>%sulu.model.tag.class%</entity-name>
             <transformer type="datetime"/>
-            <filter type="datetime" />
         </property>
 
         <property
@@ -52,7 +51,6 @@
             <field-name>created</field-name>
             <entity-name>%sulu.model.tag.class%</entity-name>
             <transformer type="datetime"/>
-            <filter type="datetime" />
         </property>
     </properties>
 </list>
