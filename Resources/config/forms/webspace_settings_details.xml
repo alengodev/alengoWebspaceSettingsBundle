@@ -110,19 +110,6 @@
             </meta>
 
             <types>
-                <type name="icon">
-                    <meta>
-                        <title>Icon</title>
-                    </meta>
-
-                    <properties>
-                        <property name="contacts" type="contact_account_selection">
-                            <meta>
-                                <title lang="en">Contacts / Accounts</title>
-                            </meta>
-                        </property>
-                    </properties>
-                </type>
                 <type name="quote">
                     <meta>
                         <title lang="en">Quote</title>
