@@ -1,0 +1,63 @@
+{
+    "name": "alengo/alengo-webspace-settings-bundle",
+    "type": "sulu-bundle",
+    "description": "Webspace Settings Bundle",
+    "keywords": [
+        "sulu",
+        "suluCms",
+        "content",
+        "entity"
+    ],
+    "homepage": "https://github.com/alengodev/AlengoWebspaceSettingsBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Huber-De Monte"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "sulu/sulu": "^2.6",
+        "symfony/config": "^7.2",
+        "symfony/dependency-injection": "^7.2",
+        "symfony/framework-bundle": "^7.2",
+        "symfony/http-foundation": "^7.2",
+        "symfony/http-kernel": "^7.2",
+        "symfony/serializer": "^7.2",
+        "symfony/twig-bundle": "^7.2"
+    },
+    "require-dev": {
+        "handcraftedinthealps/zendsearch": "^2.0",
+        "jackalope/jackalope-doctrine-dbal": "^1.10 || ^2.0",
+        "friendsofphp/php-cs-fixer": "^3.9",
+        "phpstan/extension-installer": "^1.2",
+        "phpstan/phpstan": "^1.4",
+        "phpstan/phpstan-doctrine": "^1.2",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-symfony": "^1.1",
+        "phpstan/phpstan-webmozart-assert": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "rector/rector": "^1.0.3",
+        "sulu/sulu-rector": "^1.0.0",
+        "symfony/browser-kit": "^7.2",
+        "symfony/console": "^7.2",
+        "symfony/dotenv": "^7.2",
+        "symfony/error-handler": "^7.2",
+        "symfony/monolog-bundle": "^3.1"
+    },
+    "scripts": {
+        "phpstan": "@php vendor/bin/phpstan analyze"
+    },
+    "autoload": {
+        "psr-4": {
+            "Alengo\\Bundle\\AlengoWebspaceSettingsBundle\\": ""
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true
+        }
+    }
+}
