@@ -33,19 +33,34 @@
                             <title>String localized</title>
                         </meta>
                     </param>
-                    <param name="media">
+                    <!--<param name="media">
+                        <meta>
+                            <title>Media</title>
+                        </meta>
+                    </param>-->
+                    <param name="medias">
                         <meta>
                             <title>Media</title>
                         </meta>
                     </param>
-                    <param name="organization">
+                    <param name="contacts">
                         <meta>
-                            <title>Organization</title>
+                            <title>Contact</title>
                         </meta>
                     </param>
                     <param name="organizations">
                         <meta>
-                            <title>Organizations</title>
+                            <title>Organization</title>
+                        </meta>
+                    </param>
+                    <param name="blocks">
+                        <meta>
+                            <title>Block</title>
+                        </meta>
+                    </param>
+                    <param name="blocksLocale">
+                        <meta>
+                            <title>Block localized</title>
                         </meta>
                     </param>
                 </param>
@@ -61,41 +76,132 @@
 
         <property name="dataString" type="text_line" visibleCondition="type == 'string' or type == 'stringLocale'">
             <meta>
-                <title>Value</title>
+                <title>String</title>
             </meta>
         </property>
 
-        <property name="dataMedia" type="single_media_selection" visibleCondition="type == 'media'">
+        <!--<property name="dataMedia" type="single_media_selection" visibleCondition="type == 'media'">
+            <meta>
+                <title>Media</title>
+            </meta>
+        </property>-->
+
+        <property name="dataMedias" type="media_selection" visibleCondition="type == 'medias'">
             <meta>
                 <title>Media</title>
             </meta>
         </property>
 
-        <property name="dataAccount" type="single_account_selection" visibleCondition="type == 'organization'">
+        <property name="dataContacts" type="contact_selection" visibleCondition="type == 'contacts'">
             <meta>
-                <title>Organization</title>
+                <title>Contact</title>
             </meta>
         </property>
 
         <property name="dataAccounts" type="account_selection" visibleCondition="type == 'organizations'">
             <meta>
-                <title>Organizations</title>
-            </meta>
-        </property>
-        
-        <property name="description" type="text_area">
-            <meta>
-                <title>sulu_admin.description</title>
+                <title>Organization</title>
             </meta>
         </property>
 
-        <property name="locale" type="custom_urls_locale_select" visibleCondition="type == 'stringLocale'">
+        <block name="dataBlocks" default-type="editor_image" minOccurs="0" visibleCondition="type == 'blocks' or type == 'blocksLocale'">
+            <meta>
+                <title>Block</title>
+            </meta>
+
+            <types>
+                <type name="icon">
+                    <meta>
+                        <title>Icon</title>
+                    </meta>
+
+                    <properties>
+                        <property name="contacts" type="contact_account_selection">
+                            <meta>
+                                <title lang="en">Contacts / Accounts</title>
+                            </meta>
+                        </property>
+                    </properties>
+                </type>
+                <type name="quote">
+                    <meta>
+                        <title lang="en">Quote</title>
+                        <title lang="de">Zitat</title>
+                    </meta>
+
+                    <properties>
+                        <property name="images" type="single_media_selection">
+                            <meta>
+                                <title lang="de">Bild</title>
+                                <title lang="en">Image</title>
+                            </meta>
+
+                            <tag name="sulu.block_preview" priority="512"/>
+                        </property>
+
+                        <property name="article" type="text_editor">
+                            <meta>
+                                <title lang="de">Artikel</title>
+                                <title lang="en">Article</title>
+                            </meta>
+
+                            <tag name="sulu.block_preview" priority="1024"/>
+                        </property>
+                    </properties>
+                </type>
+                <type name="editor_image">
+                    <meta>
+                        <title lang="en">Editor with image</title>
+                        <title lang="de">Editor mit Bild</title>
+                    </meta>
+
+                    <properties>
+                        <property name="images" type="media_selection">
+                            <meta>
+                                <title lang="de">Bilder</title>
+                                <title lang="en">Images</title>
+                            </meta>
+
+                            <tag name="sulu.block_preview" priority="512"/>
+                        </property>
+
+                        <property name="article" type="text_editor">
+                            <meta>
+                                <title lang="de">Artikel</title>
+                                <title lang="en">Article</title>
+                            </meta>
+
+                            <tag name="sulu.block_preview" priority="1024"/>
+                        </property>
+                    </properties>
+                </type>
+            </types>
+        </block>
+
+        <property name="locale" type="custom_urls_locale_select" visibleCondition="type == 'stringLocale' or type == 'blocksLocale'">
             <meta>
                 <title>sulu_custom_url.target_locale</title>
             </meta>
         </property>
 
-        <property name="enabled" type="checkbox">
+        <property name="showOptions" type="checkbox">
+            <params>
+                <param name="type" value="toggler"/>
+                <param name="label">
+                    <meta>
+                        <title>alengo_webspace_settings.show_options</title>
+                    </meta>
+                </param>
+            </params>
+        </property>
+
+        <property name="description" type="text_area" visibleCondition="showOptions == true">
+            <meta>
+                <title>sulu_admin.description</title>
+            </meta>
+        </property>
+
+        <property name="enabled" type="checkbox" colspan="4" visibleCondition="showOptions == true">
             <meta>
                 <info_text>alengo_webspace_settings.enabled_info</info_text>
             </meta>

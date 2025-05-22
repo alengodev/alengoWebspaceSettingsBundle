@@ -6,7 +6,7 @@
         "type_key_info": "Schlüssel Typ wird automatisch formatiert und muss einzigartig sein.",
         "enable": "aktivieren",
         "enabled": "aktiviert",
-        "enabled_info": "Aktuelle Webspace-Einstellung aktivieren oder deaktivieren."
-
+        "enabled_info": "Aktuelle Webspace-Einstellung aktivieren oder deaktivieren.",
+        "show_options": "weitere Optionen anzeigen und bearbeiten"
     }
 }

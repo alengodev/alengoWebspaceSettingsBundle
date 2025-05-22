@@ -12,7 +12,7 @@ use Sulu\Component\Persistence\Model\AuditableTrait;
 
 #[ORM\Entity(repositoryClass: WebspaceSettingsRepository::class)]
 #[ORM\Table(name: 'we_settings')]
-#[ORM\UniqueConstraint(name: 'uniq_typekey_webspacekey', columns: ['type_key', 'webspace_key'])]
+#[ORM\UniqueConstraint(name: 'unique_typekey_webspacekey_locale', columns: ['type_key', 'webspace_key', 'locale'])]
 class WebspaceSettings implements AuditableInterface
 {
     use AuditableTrait;
@@ -45,8 +45,8 @@ class WebspaceSettings implements AuditableInterface
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $locale = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    private ?bool $enabled = null;
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
+    private ?bool $enabled = true;
 
     public function getId(): ?int
     {
@@ -130,6 +130,6 @@ class WebspaceSettings implements AuditableInterface
 
     public function setEnabled(?bool $enabled): void
     {
-        $this->enabled = $enabled;
+        $this->enabled = $enabled ?? true;
     }
 }

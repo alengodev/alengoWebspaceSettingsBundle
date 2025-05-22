@@ -127,14 +127,25 @@ class WebspaceSettings
         };
     }
 
-    #[SerializedName('dataAccount')]
+    #[SerializedName('dataMedias')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
-    public function getDataAccount(): int|string
+    public function getDataMedias(): array
     {
         return match($this->entity->getType()) {
-            'organization' => $this->entity->getData()[0],
-            default => '',
+            'medias' => $this->entity->getData(),
+            default => [],
+        };
+    }
+
+    #[SerializedName('dataContacts')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataContacts(): array
+    {
+        return match($this->entity->getType()) {
+            'contacts' => $this->entity->getData(),
+            default => [],
         };
     }
 
@@ -145,6 +156,17 @@ class WebspaceSettings
     {
         return match($this->entity->getType()) {
             'organizations' => $this->entity->getData(),
+            default => [],
+        };
+    }
+
+    #[SerializedName('dataBlocks')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataBlocks(): array
+    {
+        return match($this->entity->getType()) {
+            'blocks', 'blocksLocale' => $this->entity->getData(),
             default => [],
         };
     }
