@@ -127,6 +127,17 @@ class WebspaceSettings
         };
     }
 
+    #[SerializedName('dataAccount')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataAccount(): int|string
+    {
+        return match($this->entity->getType()) {
+            'organization' => $this->entity->getData()[0],
+            default => '',
+        };
+    }
+
     #[SerializedName('locale')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]

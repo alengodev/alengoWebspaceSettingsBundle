@@ -120,7 +120,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
     protected function mapDataByType($type, $data): array
     {
-        $dataValue = match ($type) {
+        return match ($type) {
             'string', 'stringLocale' => [
                 $data['dataString'] ?? ''
             ],
@@ -130,10 +130,11 @@ class WebspaceSettingsController extends AbstractRestController implements Class
                     'id' => null,
                 ]
             ],
+            'organization' => [
+                $data['dataAccount'] ?? '',
+            ],
             default => [],
         };
-
-        return $dataValue;
     }
 
     protected function mapLocaleByType($type, $data): string

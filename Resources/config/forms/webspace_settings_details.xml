@@ -45,6 +45,11 @@
                             <title>Media</title>
                         </meta>
                     </param>
+                    <param name="organization">
+                        <meta>
+                            <title>Organization</title>
+                        </meta>
+                    </param>
                 </param>
             </params>
         </property>
@@ -58,6 +63,12 @@
         <property name="dataMedia" type="single_media_selection" visibleCondition="type == 'media'">
             <meta>
                 <title>Media</title>
+            </meta>
+        </property>
+
+        <property name="dataAccount" type="single_account_selection" visibleCondition="type == 'organization'">
+            <meta>
+                <title>Organization</title>
             </meta>
         </property>
         
