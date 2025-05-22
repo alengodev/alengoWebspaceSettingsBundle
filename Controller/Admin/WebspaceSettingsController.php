@@ -121,7 +121,15 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     protected function mapDataByType($type, $data): array
     {
         $dataValue = match ($type) {
-            'string', 'stringLocale' => [$data['dataString'] ?? ''],
+            'string', 'stringLocale' => [
+                $data['dataString'] ?? ''
+            ],
+            'media' => [
+                $data['dataMedia'] ?? [
+                    'displayOptions' => null,
+                    'id' => null,
+                ]
+            ],
             default => [],
         };
 
@@ -140,7 +148,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
     protected function generateTypeKey(string $title, string $typeKey = ''): string
     {
-        $string = empty($typeKey) ? $title : $typeKey;
+        $string = '' === $typeKey || '0' === $typeKey ? $title : $typeKey;
 
         $string = \strtr($string, [
             'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue',

@@ -40,26 +40,26 @@
                             <title>String localized</title>
                         </meta>
                     </param>
-                    <!--<param name="media">
+                    <param name="media">
                         <meta>
                             <title>Media</title>
                         </meta>
-                    </param>-->
+                    </param>
                 </param>
             </params>
         </property>
 
-        <property name="dataString" type="text_line" mandatory="true" visibleCondition="type == 'string' or type == 'stringLocale'">
+        <property name="dataString" type="text_line" visibleCondition="type == 'string' or type == 'stringLocale'">
             <meta>
                 <title>Value</title>
             </meta>
         </property>
 
-        <!--<property name="dataMedia" type="single_media_selection" visibleCondition="type == 'media'">
+        <property name="dataMedia" type="single_media_selection" visibleCondition="type == 'media'">
             <meta>
                 <title>Media</title>
             </meta>
-        </property>-->
+        </property>
         
         <property name="description" type="text_area">
             <meta>
@@ -80,7 +80,7 @@
             <params>
                 <param name="label">
                     <meta>
-                        <title>sulu_admin.publish</title>
+                        <title>alengo_webspace_settings.enabled</title>
                     </meta>
                 </param>
                 <param name="default_value" value="true"/>

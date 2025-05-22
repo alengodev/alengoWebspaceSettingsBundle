@@ -62,7 +62,7 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDescription(): string
     {
-        return $this->entity->getDescription();
+        return $this->entity->getDescription() ?: '';
     }
 
     #[SerializedName('type')]
@@ -107,9 +107,24 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDataString(): string
     {
-        $data = $this->entity->getData();
+        return match($this->entity->getType()) {
+            'string', 'stringLocale' => $this->entity->getData()[0],
+            default => '',
+        };
+    }
 
-        return $data[0];
+    #[SerializedName('dataMedia')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataMedia(): array
+    {
+        return match($this->entity->getType()) {
+            'media' => $this->entity->getData()[0],
+            default => [
+                'displayOptions' => null,
+                'id' => null,
+            ],
+        };
     }
 
     #[SerializedName('locale')]

@@ -111,7 +111,7 @@ class WebspaceSettingsAdmin extends Admin
         foreach ($this->webspaceManager->getWebspaceCollection()->getWebspaces() as $webspace) {
             $hasWebspaceAnalyticsPermission = $this->securityChecker->hasPermission(
                 self::getWebspaceSettingsSecurityContext($webspace->getKey()),
-                PermissionTypes::EDIT,
+                PermissionTypes::VIEW,
             );
 
             if ($hasWebspaceAnalyticsPermission) {

@@ -28,11 +28,6 @@
             <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
         </property>
 
-        <property name="enabled" visibility="always" sortable="false" type="bool" translation="sulu_admin.publish">
-            <field-name>enabled</field-name>
-            <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
-        </property>
-
         <property
                 name="changed"
                 visibility="no"
