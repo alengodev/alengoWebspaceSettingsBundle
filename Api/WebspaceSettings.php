@@ -107,7 +107,7 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDataString(): string
     {
-        return match($this->entity->getType()) {
+        return match ($this->entity->getType()) {
             'string', 'stringLocale' => $this->entity->getData()[0],
             default => '',
         };
@@ -118,7 +118,7 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDataMedia(): array
     {
-        return match($this->entity->getType()) {
+        return match ($this->entity->getType()) {
             'media' => $this->entity->getData()[0],
             default => [
                 'displayOptions' => null,
@@ -132,7 +132,7 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDataMedias(): array
     {
-        return match($this->entity->getType()) {
+        return match ($this->entity->getType()) {
             'medias' => $this->entity->getData(),
             default => [],
         };
@@ -143,7 +143,7 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDataContacts(): array
     {
-        return match($this->entity->getType()) {
+        return match ($this->entity->getType()) {
             'contacts' => $this->entity->getData(),
             default => [],
         };
@@ -154,7 +154,7 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDataAccounts(): array
     {
-        return match($this->entity->getType()) {
+        return match ($this->entity->getType()) {
             'organizations' => $this->entity->getData(),
             default => [],
         };
@@ -165,7 +165,7 @@ class WebspaceSettings
     #[Groups(['fullWebspaceSettings'])]
     public function getDataBlocks(): array
     {
-        return match($this->entity->getType()) {
+        return match ($this->entity->getType()) {
             'blocks', 'blocksLocale' => $this->entity->getData(),
             default => [],
         };

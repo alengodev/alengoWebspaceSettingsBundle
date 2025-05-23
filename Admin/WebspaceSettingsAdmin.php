@@ -18,7 +18,7 @@ use Sulu\Component\Webspace\Webspace;
 class WebspaceSettingsAdmin extends Admin
 {
     public const WEBSPACE_SETTINGS_LIST_KEY = 'webspace_settings';
-    public const WEBSPACE_SETTINGS_LIST_VIEW = 'app.webspace_settings_list';
+    public const WEBSPACE_SETTINGS_LIST_VIEW = 'app.webspace_settings.list_view';
 
     public function __construct(
         private readonly WebspaceManagerInterface $webspaceManager,

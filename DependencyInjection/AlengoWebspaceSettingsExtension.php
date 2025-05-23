@@ -51,8 +51,8 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
                     'resources' => [
                         'webspace_settings' => [
                             'routes' => [
-                                'list' => 'app.cget_webspace-settings',
-                                'detail' => 'app.get_webspace-settings',
+                                'list' => 'alengo_webspace_settings.cget_webspace-settings',
+                                'detail' => 'alengo_webspace_settings.get_webspace-settings',
                             ],
                         ],
                     ],

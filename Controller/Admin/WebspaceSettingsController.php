@@ -9,10 +9,8 @@ use Alengo\Bundle\AlengoWebspaceSettingsBundle\Api\WebspaceSettings as WebspaceS
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\ListBuilder\CollectionRepresentation;
@@ -21,10 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @RouteResource("webspace-settings")
- */
 class WebspaceSettingsController extends AbstractRestController implements ClassResourceInterface, SecuredControllerInterface
 {
     public function __construct(
@@ -35,6 +31,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         parent::__construct($viewHandler);
     }
 
+    #[Route(
+        '/webspace/settings.{_format}',
+        name: 'cget_webspace-settings',
+        defaults: ['_format' => 'json'],
+        methods: ['GET'],
+    )]
     public function cgetAction(Request $request): Response
     {
         $webspace = $request->query->get('webspace');
@@ -48,9 +50,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return $this->handleView($this->view($list, 200));
     }
 
-    /**
-     * @Rest\Get("/webspace-settings/{id}")
-     */
+    #[Route(
+        '/webspace/settings/{id}.{_format}',
+        name: 'get_webspace-settings',
+        defaults: ['_format' => 'json'],
+        methods: ['GET'],
+    )]
     public function getAction(Request $request, $id): Response
     {
         $webspace = $request->query->get('webspace');
@@ -66,6 +71,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return $this->handleView($view);
     }
 
+    #[Route(
+        '/webspace/settings.{_format}',
+        name: 'post_webspace-settings',
+        defaults: ['_format' => 'json'],
+        methods: ['POST'],
+    )]
     public function postAction(Request $request): Response
     {
         $webspace = $request->query->get('webspace');
@@ -81,9 +92,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return $this->handleView($this->view($webspaceSettings, 201));
     }
 
-    /**
-     * @Rest\Put("/webspace-settings/{id}")
-     */
+    #[Route(
+        '/webspace/settings/{id}.{_format}',
+        name: 'put_webspace-settings',
+        defaults: ['_format' => 'json'],
+        methods: ['PUT'],
+    )]
     public function putAction(Request $request, int $id): Response
     {
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
@@ -98,6 +112,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return $this->handleView($this->view($webspaceSettings, 200));
     }
 
+    #[Route(
+        '/webspace/settings/{id}.{_format}',
+        name: 'delete_webspace-settings',
+        defaults: ['_format' => 'json'],
+        methods: ['DELETE'],
+    )]
     public function deleteAction(int $id): Response
     {
         $webspaceSettings = $this->entityManager->getReference(WebspaceSettings::class, $id);
@@ -122,13 +142,13 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     {
         return match ($type) {
             'string', 'stringLocale' => [
-                $data['dataString'] ?? ''
+                $data['dataString'] ?? '',
             ],
             'media' => [
                 $data['dataMedia'] ?? [
                     'displayOptions' => null,
                     'id' => null,
-                ]
+                ],
             ],
             'medias' => $data['dataMedias'] ?? [],
             'contacts' => $data['dataContacts'] ?? [],

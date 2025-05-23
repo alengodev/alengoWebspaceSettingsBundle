@@ -33,9 +33,9 @@ bin/console do:sch:up --force
 Set the following config in your routes_admin.yaml
 
  ```yaml
-app_webspace_settings_api:
-    type: rest
+alengo_webspace_settings_api:
+    type: attribute
     resource: Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin\WebspaceSettingsController
     prefix: /admin/api
-    name_prefix: app.
+    name_prefix: alengo_webspace_settings.
  ```
