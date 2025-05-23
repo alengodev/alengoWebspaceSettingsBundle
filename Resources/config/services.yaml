@@ -1,0 +1,16 @@
+services:
+    Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin:
+        arguments:
+            - '@sulu_core.webspace.webspace_manager'
+            - '@sulu_admin.view_builder_factory'
+            - '@sulu_security.security_checker'
+        tags:
+            - { name: 'sulu.admin' }
+            - { name: 'sulu.context', context: 'admin' }
+
+    Alengo\Bundle\AlengoWebspaceSettingsBundle\Repository\WebspaceSettingsRepository:
+        public: 'true'
+        arguments:
+            - '@doctrine'
+        tags:
+            - 'doctrine.repository_service'

@@ -1,0 +1,13 @@
+{
+    "alengo_webspace_settings": {
+        "title": "Settings",
+        "type": "Type",
+        "type_key": "Type key",
+        "type_key_info": "Type key is formated automatically and must be unique.",
+        "enable": "enable",
+        "enabled": "enabled",
+        "enabled_info": "Enable or disable the current webspace setting.",
+        "show_options": "show and edit more options",
+        "event_info": "Command, Message or Event that can be triggered with WebspaceSettingsCreatedEvent or WebspaceSettingsUpdatedEvent."
+    }
+}

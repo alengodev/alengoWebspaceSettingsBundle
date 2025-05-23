@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>webspace_settings</key>
+
+    <properties>
+        <property name="id" visibility="no" sortable="false" translation="sulu_admin.id">
+            <field-name>id</field-name>
+            <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
+        </property>
+
+        <property name="title" visibility="always" sortable="false" translation="sulu_admin.title">
+            <field-name>title</field-name>
+            <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
+        </property>
+
+        <property name="typeKey" visibility="always" sortable="false" translation="alengo_webspace_settings.type_key">
+            <field-name>typeKey</field-name>
+            <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
+        </property>
+
+        <property name="type" visibility="always" sortable="false" translation="alengo_webspace_settings.type">
+            <field-name>type</field-name>
+            <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
+        </property>
+
+        <property name="locale" visibility="always" sortable="false" translation="sulu_custom_url.target_locale">
+            <field-name>locale</field-name>
+            <entity-name>Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings</entity-name>
+        </property>
+
+        <property
+                name="changed"
+                visibility="no"
+                translation="sulu_admin.changed"
+        >
+            <field-name>changed</field-name>
+            <entity-name>%sulu.model.tag.class%</entity-name>
+            <transformer type="datetime"/>
+        </property>
+
+        <property
+                name="created"
+                visibility="yes"
+                translation="sulu_admin.created"
+        >
+            <field-name>created</field-name>
+            <entity-name>%sulu.model.tag.class%</entity-name>
+            <transformer type="datetime"/>
+        </property>
+    </properties>
+</list>
