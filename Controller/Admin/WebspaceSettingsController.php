@@ -23,16 +23,18 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class WebspaceSettingsController extends AbstractRestController implements ClassResourceInterface, SecuredControllerInterface
 {
     public function __construct(
         ViewHandlerInterface $viewHandler,
+        TokenStorageInterface $tokenStorage,
         private readonly EntityManagerInterface $entityManager,
         private readonly RequestStack $requestStack,
         private readonly EventDispatcherInterface $eventDispatcher,
     ) {
-        parent::__construct($viewHandler);
+        parent::__construct($viewHandler, $tokenStorage);
     }
 
     #[Route(
@@ -89,6 +91,10 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         $this->mapDataToEntity($request->request->all(), $webspaceSettings);
         $webspaceSettings->setWebspaceKey($webspace);
+        $webspaceSettings->setCreated(new \DateTimeImmutable());
+        $webspaceSettings->setChanged(new \DateTime());
+        $webspaceSettings->setIdUsersCreator($this->getUser()->getId());
+        $webspaceSettings->setIdUsersChanger($this->getUser()->getId());
 
         $this->entityManager->persist($webspaceSettings);
         $this->entityManager->flush();
@@ -111,10 +117,11 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     public function putAction(Request $request, int $id): Response
     {
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
-
         if (!$webspaceSettings instanceof WebspaceSettings) {
             throw new NotFoundHttpException();
         }
+        $webspaceSettings->setChanged(new \DateTime());
+        $webspaceSettings->setIdUsersChanger($this->getUser()->getId());
 
         $this->mapDataToEntity($request->request->all(), $webspaceSettings);
         $this->entityManager->flush();
