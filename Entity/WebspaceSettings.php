@@ -48,6 +48,12 @@ class WebspaceSettings implements AuditableInterface
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
     private ?bool $enabled = true;
 
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private ?bool $execute = false;
+
+    #[ORM\Column(type: Types::JSON)]
+    private ?array $executeLog = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -131,5 +137,25 @@ class WebspaceSettings implements AuditableInterface
     public function setEnabled(?bool $enabled): void
     {
         $this->enabled = $enabled ?? true;
+    }
+
+    public function getExecute(): ?bool
+    {
+        return $this->execute;
+    }
+
+    public function setExecute(?bool $execute): void
+    {
+        $this->execute = $execute ?? false;
+    }
+
+    public function getExecuteLog(): ?array
+    {
+        return $this->executeLog;
+    }
+
+    public function setExecuteLog(?array $executeLog): void
+    {
+        $this->executeLog = $executeLog ?? [];
     }
 }

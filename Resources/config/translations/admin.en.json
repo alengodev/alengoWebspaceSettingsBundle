@@ -7,6 +7,7 @@
         "enable": "enable",
         "enabled": "enabled",
         "enabled_info": "Enable or disable the current webspace setting.",
-        "show_options": "show and edit more options"
+        "show_options": "show and edit more options",
+        "event_info": "Command, Message or Event that can be triggered with WebspaceSettingsCreatedEvent or WebspaceSettingsUpdatedEvent."
     }
 }

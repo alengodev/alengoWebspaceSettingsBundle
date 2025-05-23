@@ -81,27 +81,6 @@ class WebspaceSettings
         return $this->entity->getTypeKey();
     }
 
-    /*#[SerializedName('data')]
-    #[VirtualProperty()]
-    #[Groups(['fullWebspaceSettings'])]
-    public function getData(): array
-    {
-        $data = [];
-        if (!$this->entity->getData()) {
-            return $data;
-        }
-        foreach ($this->entity->getData() as $key => $dataElement) {
-            $data[$key] = [
-                'type' => 'field',
-                'data' => \is_array($dataElement) ? $this->getDataAsJsonElement($dataElement) : $dataElement,
-                'label' => $key,
-            ];
-        }
-        \ksort($data);
-
-        return \array_values($data);
-    }*/
-
     #[SerializedName('dataString')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
@@ -109,6 +88,17 @@ class WebspaceSettings
     {
         return match ($this->entity->getType()) {
             'string', 'stringLocale' => $this->entity->getData()[0],
+            default => '',
+        };
+    }
+
+    #[SerializedName('dataEvent')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataEvent(): string
+    {
+        return match ($this->entity->getType()) {
+            'event' => $this->entity->getData()[0],
             default => '',
         };
     }
@@ -138,6 +128,17 @@ class WebspaceSettings
         };
     }
 
+    #[SerializedName('dataContact')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataContact(): int|string|null
+    {
+        return match ($this->entity->getType()) {
+            'contact' => $this->entity->getData()[0],
+            default => null,
+        };
+    }
+
     #[SerializedName('dataContacts')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
@@ -146,6 +147,17 @@ class WebspaceSettings
         return match ($this->entity->getType()) {
             'contacts' => $this->entity->getData(),
             default => [],
+        };
+    }
+
+    #[SerializedName('dataAccount')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataAccount(): int|string|null
+    {
+        return match ($this->entity->getType()) {
+            'organization' => $this->entity->getData()[0],
+            default => null,
         };
     }
 
@@ -185,6 +197,22 @@ class WebspaceSettings
     public function getEnabled(): bool
     {
         return $this->entity->getEnabled();
+    }
+
+    #[SerializedName('execute')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getExecute(): bool
+    {
+        return $this->entity->getExecute();
+    }
+
+    #[SerializedName('executeLog')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getExecuteLog(): string
+    {
+        return $this->getDataAsJsonElement($this->entity->getExecuteLog());
     }
 
     #[SerializedName('created')]

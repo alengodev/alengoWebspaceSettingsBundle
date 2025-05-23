@@ -7,6 +7,8 @@ namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Api\WebspaceSettings as WebspaceSettingsApi;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsCreatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsUpdatedEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
@@ -15,6 +17,7 @@ use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\ListBuilder\CollectionRepresentation;
 use Sulu\Component\Security\SecuredControllerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +30,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         ViewHandlerInterface $viewHandler,
         private readonly EntityManagerInterface $entityManager,
         private readonly RequestStack $requestStack,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
         parent::__construct($viewHandler);
     }
@@ -89,6 +93,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $this->entityManager->persist($webspaceSettings);
         $this->entityManager->flush();
 
+        // Event dispatching
+        $this->eventDispatcher->dispatch(
+            new WebspaceSettingsCreatedEvent($webspaceSettings),
+            WebspaceSettingsCreatedEvent::class,
+        );
+
         return $this->handleView($this->view($webspaceSettings, 201));
     }
 
@@ -108,6 +118,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         $this->mapDataToEntity($request->request->all(), $webspaceSettings);
         $this->entityManager->flush();
+
+        // Event dispatching
+        $this->eventDispatcher->dispatch(
+            new WebspaceSettingsUpdatedEvent($webspaceSettings),
+            WebspaceSettingsUpdatedEvent::class,
+        );
 
         return $this->handleView($this->view($webspaceSettings, 200));
     }
@@ -136,6 +152,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setDescription($data['description']);
         $entity->setLocale($this->mapLocaleByType($data['type'], $data));
         $entity->setEnabled($data['enabled']);
+        $entity->setExecute($this->mapExecuteByType($data['type'], $data));
     }
 
     protected function mapDataByType($type, $data): array
@@ -144,6 +161,9 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             'string', 'stringLocale' => [
                 $data['dataString'] ?? '',
             ],
+            'event' => [
+                $data['dataEvent'] ?? '',
+            ],
             'media' => [
                 $data['dataMedia'] ?? [
                     'displayOptions' => null,
@@ -151,7 +171,13 @@ class WebspaceSettingsController extends AbstractRestController implements Class
                 ],
             ],
             'medias' => $data['dataMedias'] ?? [],
+            'contact' => [
+                $data['dataContact'] ?? '',
+            ],
             'contacts' => $data['dataContacts'] ?? [],
+            'organization' => [
+                $data['dataAccount'] ?? '',
+            ],
             'organizations' => $data['dataAccounts'] ?? [],
             'blocks', 'blocksLocale' => $data['dataBlocks'] ?? [],
             default => [],
@@ -160,12 +186,18 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
     protected function mapLocaleByType($type, $data): string
     {
-        $dataValue = match ($type) {
+        return match ($type) {
             'stringLocale', 'blocksLocale' => $data['locale'] ?? '',
             default => '',
         };
+    }
 
-        return $dataValue;
+    protected function mapExecuteByType($type, $data): bool
+    {
+        return match ($type) {
+            'event' => null !== $data['execute'],
+            default => false,
+        };
     }
 
     protected function generateTypeKey(string $title, string $typeKey = ''): string
@@ -180,9 +212,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         $string = \iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
         $string = \preg_replace('/[^a-zA-Z0-9]+/', ' ', $string);
-        $string = \lcfirst(\str_replace(' ', '', \ucwords(\trim((string) $string))));
 
-        return $string;
+        return \lcfirst(\str_replace(' ', '', \ucwords(\trim((string) $string))));
     }
 
     protected function generateShortKey(int $length = 8): string

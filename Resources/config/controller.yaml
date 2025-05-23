@@ -5,3 +5,4 @@ services:
             - '@fos_rest.view_handler.default'
             - '@doctrine.orm.default_entity_manager'
             - '@request_stack'
+            - '@event_dispatcher'
