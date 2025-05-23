@@ -7,16 +7,12 @@ namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Repository\WebspaceSettingsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Sulu\Component\Persistence\Model\AuditableInterface;
-use Sulu\Component\Persistence\Model\AuditableTrait;
 
 #[ORM\Entity(repositoryClass: WebspaceSettingsRepository::class)]
 #[ORM\Table(name: 'we_settings')]
 #[ORM\UniqueConstraint(name: 'unique_typekey_webspacekey_locale', columns: ['type_key', 'webspace_key', 'locale'])]
-class WebspaceSettings implements AuditableInterface
+class WebspaceSettings
 {
-    use AuditableTrait;
-
     public const RESOURCE_KEY = 'webspace_settings';
 
     #[ORM\Id()]
@@ -53,6 +49,18 @@ class WebspaceSettings implements AuditableInterface
 
     #[ORM\Column(type: Types::JSON)]
     private ?array $executeLog = [];
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private $created;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private $changed;
+
+    #[ORM\Column(name: 'idUsersCreator', type: Types::INTEGER)]
+    private ?int $idUsersCreator = null;
+
+    #[ORM\Column(name: 'idUsersChanger', type: Types::INTEGER)]
+    private ?int $idUsersChanger = null;
 
     public function getId(): ?int
     {
@@ -157,5 +165,45 @@ class WebspaceSettings implements AuditableInterface
     public function setExecuteLog(?array $executeLog): void
     {
         $this->executeLog = $executeLog ?? [];
+    }
+
+    public function getCreated(): \DateTimeImmutable
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeImmutable $created): void
+    {
+        $this->created = $created;
+    }
+
+    public function getChanged(): \DateTimeInterface
+    {
+        return $this->changed;
+    }
+
+    public function setChanged(\DateTimeInterface $changed): void
+    {
+        $this->changed = $changed;
+    }
+
+    public function getIdUsersCreator(): ?int
+    {
+        return $this->idUsersCreator;
+    }
+
+    public function setIdUsersCreator(?int $idUsersCreator): void
+    {
+        $this->idUsersCreator = $idUsersCreator;
+    }
+
+    public function getIdUsersChanger(): ?int
+    {
+        return $this->idUsersChanger;
+    }
+
+    public function setIdUsersChanger(?int $idUsersChanger): void
+    {
+        $this->idUsersChanger = $idUsersChanger;
     }
 }

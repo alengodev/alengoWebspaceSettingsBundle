@@ -3,6 +3,7 @@ services:
         public: 'true'
         arguments:
             - '@fos_rest.view_handler.default'
+            - '@security.token_storage'
             - '@doctrine.orm.default_entity_manager'
             - '@request_stack'
             - '@event_dispatcher'
