@@ -14,3 +14,14 @@ services:
             - '@doctrine'
         tags:
             - 'doctrine.repository_service'
+
+    Alengo\Bundle\AlengoWebspaceSettingsBundle\Twig\WebspaceSettingsExtension:
+        public: 'true'
+        arguments:
+            - '@request_stack'
+            - '@alengo_webspace_settings.repository.webspace_settings'
+        tags:
+            - { name: twig.extension }
+
+    alengo_webspace_settings.repository.webspace_settings:
+        alias: Alengo\Bundle\AlengoWebspaceSettingsBundle\Repository\WebspaceSettingsRepository

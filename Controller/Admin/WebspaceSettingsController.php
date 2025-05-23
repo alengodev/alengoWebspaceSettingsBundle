@@ -64,8 +64,6 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     )]
     public function getAction(Request $request, $id): Response
     {
-        $webspace = $request->query->get('webspace');
-
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
         if (!$webspaceSettings instanceof WebspaceSettings) {
             throw new NotFoundHttpException();
