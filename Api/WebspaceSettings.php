@@ -183,6 +183,14 @@ class WebspaceSettings
         };
     }
 
+    #[SerializedName('dataListView')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataListView(): string
+    {
+        return $this->getDataAsJsonElement($this->entity->getData());
+    }
+
     #[SerializedName('locale')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
@@ -225,16 +233,16 @@ class WebspaceSettings
 
     #[SerializedName('created')]
     #[VirtualProperty()]
-    #[Groups(['fullFormData'])]
-    public function getCreated(): \DateTime
+    #[Groups(['fullWebspaceSettings'])]
+    public function getCreated(): \DateTimeImmutable
     {
         return $this->entity->getCreated();
     }
 
     #[SerializedName('changed')]
     #[VirtualProperty()]
-    #[Groups(['fullFormData'])]
-    public function getChanged(): \DateTime
+    #[Groups(['fullWebspaceSettings'])]
+    public function getChanged(): \DateTimeInterface
     {
         return $this->entity->getChanged();
     }

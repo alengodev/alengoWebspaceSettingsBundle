@@ -9,6 +9,7 @@ use Alengo\Bundle\AlengoWebspaceSettingsBundle\Api\WebspaceSettings as WebspaceS
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsCreatedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsUpdatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Model\WebspaceSettings as WebspaceSettingsModel;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
@@ -54,7 +55,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             'webspaceKey' => $webspace,
         ]);
 
-        $list = new CollectionRepresentation($webspaceSettings, 'webspace_settings');
+        try {
+            $webspaceSettingsForListView = $this->generateApiWebspaceSettingsEntityCollection($webspaceSettings);
+        } catch (\JsonException $e) {
+            throw new NotFoundHttpException('Webspace settings not found', $e);
+        }
+        $list = new CollectionRepresentation($webspaceSettingsForListView, 'webspace_settings');
 
         return $this->handleView($this->view($list, 200));
     }
@@ -238,15 +244,31 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return \lcfirst(\str_replace(' ', '', \ucwords(\trim((string) $string))));
     }
 
-    protected function generateShortKey(int $length = 8): string
+    protected function generateApiWebspaceSettingsEntityCollection(array $entities): array
     {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $key = '';
-        for ($i = 0; $i < $length; ++$i) {
-            $key .= $characters[\random_int(0, \strlen($characters) - 1)];
+        $apiEntities = [];
+        foreach ($entities as $entity) {
+            if (!$entity instanceof WebspaceSettings) {
+                throw new NotFoundHttpException('Webspace settings not found');
+            }
+
+            $apiEntry = $this->handleView($this->generateViewContent($this->generateApiWebspaceSettingsEntity($entity)));
+            $apiArray = \json_decode((string) $apiEntry->getContent(), true, 512, \JSON_THROW_ON_ERROR);
+
+            $apiModel = new WebspaceSettingsModel();
+            $apiModel->setId($apiArray['id'] ?? null);
+            $apiModel->setTitle($apiArray['title'] ?? null);
+            $apiModel->setType($apiArray['type'] ?? null);
+            $apiModel->setTypeKey($apiArray['typeKey'] ?? null);
+            $apiModel->setData($apiArray['dataListView'] ?? null);
+            $apiModel->setLocale($apiArray['locale'] ?? null);
+            $apiModel->setCreated(new \DateTimeImmutable($apiArray['created']) ?? null);
+            $apiModel->setChanged(new \DateTime($apiArray['changed']) ?? null);
+
+            $apiEntities[] = $apiModel;
         }
 
-        return $key;
+        return $apiEntities;
     }
 
     protected function generateApiWebspaceSettingsEntity(WebspaceSettings $entity): WebspaceSettingsApi

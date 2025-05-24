@@ -4,6 +4,7 @@
         "type": "Type",
         "type_key": "Type key",
         "type_key_info": "Type key is formated automatically and must be unique.",
+        "data": "Data",
         "enable": "enable",
         "enabled": "enabled",
         "enabled_info": "Enable or disable the current webspace setting.",

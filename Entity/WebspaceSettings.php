@@ -54,10 +54,10 @@ class WebspaceSettings
     private ?bool $enabled = true;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private $created;
+    private ?\DateTimeImmutable $created = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private $changed;
+    private ?\DateTimeInterface $changed = null;
 
     #[ORM\Column(name: 'idUsersCreator', type: Types::INTEGER)]
     private ?int $idUsersCreator = null;

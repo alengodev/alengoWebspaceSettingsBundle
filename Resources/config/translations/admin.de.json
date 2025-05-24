@@ -4,6 +4,7 @@
         "type": "Typ",
         "type_key": "Schlüssel Typ",
         "type_key_info": "Schlüssel Typ wird automatisch formatiert und muss einzigartig sein.",
+        "data": "Daten",
         "enable": "aktivieren",
         "enabled": "aktiviert",
         "enabled_info": "Aktuelle Webspace-Einstellung aktivieren oder deaktivieren.",
