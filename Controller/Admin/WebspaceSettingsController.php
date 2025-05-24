@@ -84,10 +84,16 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     public function postAction(Request $request): Response
     {
         $webspace = $request->query->get('webspace');
+        $formData = $request->request->all();
+        $checkData = $this->mapDataByType($formData['type'], $formData);
+
+        if (null === $checkData[0] || '' === $checkData[0]) {
+            throw new NotFoundHttpException('No data provided for type ' . $formData['type']);
+        }
 
         $webspaceSettings = new WebspaceSettings();
 
-        $this->mapDataToEntity($request->request->all(), $webspaceSettings);
+        $this->mapDataToEntity($formData, $webspaceSettings);
         $webspaceSettings->setWebspaceKey($webspace);
         $webspaceSettings->setCreated(new \DateTimeImmutable());
         $webspaceSettings->setChanged(new \DateTime());
@@ -114,6 +120,13 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     )]
     public function putAction(Request $request, int $id): Response
     {
+        $formData = $request->request->all();
+        $checkData = $this->mapDataByType($formData['type'], $formData);
+
+        if (null === $checkData[0] || '' === $checkData[0]) {
+            throw new NotFoundHttpException('No data provided for type ' . $formData['type']);
+        }
+
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
         if (!$webspaceSettings instanceof WebspaceSettings) {
             throw new NotFoundHttpException();
@@ -121,7 +134,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $webspaceSettings->setChanged(new \DateTime());
         $webspaceSettings->setIdUsersChanger($this->getUser()->getId());
 
-        $this->mapDataToEntity($request->request->all(), $webspaceSettings);
+        $this->mapDataToEntity($formData, $webspaceSettings);
         $this->entityManager->flush();
 
         // Event dispatching
@@ -160,32 +173,19 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setExecute($this->mapExecuteByType($data['type'], $data));
     }
 
-    protected function mapDataByType($type, $data): array
+    protected function mapDataByType($type, $data): array|null
     {
         return match ($type) {
-            'string', 'stringLocale' => [
-                $data['dataString'] ?? '',
-            ],
-            'event' => [
-                $data['dataEvent'] ?? '',
-            ],
-            'media' => [
-                $data['dataMedia'] ?? [
-                    'displayOptions' => null,
-                    'id' => null,
-                ],
-            ],
-            'medias' => $data['dataMedias'] ?? [],
-            'contact' => [
-                $data['dataContact'] ?? '',
-            ],
-            'contacts' => $data['dataContacts'] ?? [],
-            'organization' => [
-                $data['dataAccount'] ?? '',
-            ],
-            'organizations' => $data['dataAccounts'] ?? [],
-            'blocks', 'blocksLocale' => $data['dataBlocks'] ?? [],
-            default => [],
+            'string', 'stringLocale' => [$data['dataString'] ?? null],
+            'event' => [$data['dataEvent'] ?? null],
+            'media' => [$data['dataMedia'] ?? null],
+            'medias' => $data['dataMedias'] ?? [null],
+            'contact' => [$data['dataContact'] ?? null],
+            'contacts' => $data['dataContacts'] ?? [null],
+            'organization' => [$data['dataAccount'] ?? null],
+            'organizations' => $data['dataAccounts'] ?? [null],
+            'blocks', 'blocksLocale' => $data['dataBlocks'] ?? [null],
+            default => null,
         };
     }
 
