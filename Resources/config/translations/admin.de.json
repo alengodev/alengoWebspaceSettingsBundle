@@ -35,7 +35,9 @@
         "block_textEditor": "Text Editor",
         "execute": "ausführen",
         "execute_log": "Ausführungsprotokoll",
-        "protect": "schützen",
-        "protect_info": "Schützt die Webspace-Einstellung vor Änderungen. Nur der Ersteller oder Administrator kann sie ändern."
+        "protected": "geschützt",
+        "protected_info": "Schützt die Webspace-Einstellung vor Änderungen. Nur der Ersteller oder Administrator kann sie ändern.",
+        "localization": "Lokalisierung",
+        "localization_mandatory": "Lokalisierung *"
     }
 }

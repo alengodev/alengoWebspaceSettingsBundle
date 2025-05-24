@@ -52,15 +52,6 @@ class WebspaceSettingsExtension extends AbstractExtension
             return false;
         }
 
-        return $this->mapWebspaceSettingsData($webspaceSettings);
-    }
-
-    private function mapWebspaceSettingsData(WebspaceSettings $webspaceSettings): string|array|int|bool|null
-    {
-        return match ($webspaceSettings->getType()) {
-            'string', 'stringLocale', 'contact', 'media', 'organization' => $webspaceSettings->getData()[0] ?? false,
-            'medias' => $webspaceSettings->getData()['ids'] ?? false,
-            default => $webspaceSettings->getData(),
-        };
+        return $webspaceSettings->getData()[0] ?? false;
     }
 }

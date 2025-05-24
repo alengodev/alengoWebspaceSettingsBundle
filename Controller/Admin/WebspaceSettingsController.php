@@ -46,6 +46,9 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     public function cgetAction(Request $request): Response
     {
         $webspace = $request->query->get('webspace');
+        if (!$webspace) {
+            throw new NotFoundHttpException('Webspace not found');
+        }
 
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->findBy([
             'webspaceKey' => $webspace,
@@ -66,7 +69,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     {
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
         if (!$webspaceSettings instanceof WebspaceSettings) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Webspace settings not found');
         }
 
         $apiEntity = $this->generateApiWebspaceSettingsEntity($webspaceSettings);
@@ -84,6 +87,11 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     public function postAction(Request $request): Response
     {
         $webspace = $request->query->get('webspace');
+        if (!$webspace) {
+            throw new NotFoundHttpException('Webspace not found');
+        }
+
+        $userId = $this->getUser()->getId();
         $formData = $request->request->all();
         $checkData = $this->mapDataByType($formData['type'], $formData);
 
@@ -97,8 +105,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $webspaceSettings->setWebspaceKey($webspace);
         $webspaceSettings->setCreated(new \DateTimeImmutable());
         $webspaceSettings->setChanged(new \DateTime());
-        $webspaceSettings->setIdUsersCreator($this->getUser()->getId());
-        $webspaceSettings->setIdUsersChanger($this->getUser()->getId());
+        $webspaceSettings->setIdUsersCreator($userId);
+        $webspaceSettings->setIdUsersChanger($userId);
 
         $this->entityManager->persist($webspaceSettings);
         $this->entityManager->flush();
@@ -120,6 +128,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     )]
     public function putAction(Request $request, int $id): Response
     {
+        $userId = $this->getUser()->getId();
+        $userRoles = $this->getUser()->getRoles();
         $formData = $request->request->all();
         $checkData = $this->mapDataByType($formData['type'], $formData);
 
@@ -129,10 +139,15 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
         if (!$webspaceSettings instanceof WebspaceSettings) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Webspace settings not found');
         }
+
+        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
+            throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
+        }
+
         $webspaceSettings->setChanged(new \DateTime());
-        $webspaceSettings->setIdUsersChanger($this->getUser()->getId());
+        $webspaceSettings->setIdUsersChanger($userId);
 
         $this->mapDataToEntity($formData, $webspaceSettings);
         $this->entityManager->flush();
@@ -169,22 +184,24 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setData($this->mapDataByType($data['type'], $data));
         $entity->setDescription($data['description']);
         $entity->setLocale($this->mapLocaleByType($data['type'], $data));
-        $entity->setEnabled($data['enabled']);
         $entity->setExecute($this->mapExecuteByType($data['type'], $data));
+        $entity->setEnabled($data['enabled']);
+        $entity->setProtected($data['protected']);
     }
 
     protected function mapDataByType($type, $data): array|null
     {
         return match ($type) {
-            'string', 'stringLocale' => [$data['dataString'] ?? null],
+            'string' => [$data['dataString'] ?? null],
+            'stringLocale' => [(!empty($data['dataString']) && !empty($data['locale'])) ? $data['dataString'] : null],
             'event' => [$data['dataEvent'] ?? null],
             'media' => [$data['dataMedia'] ?? null],
-            'medias' => $data['dataMedias'] ?? [null],
+            'medias' => [$data['dataMedias'] ?? null],
             'contact' => [$data['dataContact'] ?? null],
-            'contacts' => $data['dataContacts'] ?? [null],
+            'contacts' => [$data['dataContacts'] ?? null],
             'organization' => [$data['dataAccount'] ?? null],
-            'organizations' => $data['dataAccounts'] ?? [null],
-            'blocks', 'blocksLocale' => $data['dataBlocks'] ?? [null],
+            'organizations' => [$data['dataAccounts'] ?? null],
+            'blocks', 'blocksLocale' => [$data['dataBlocks'] ?? null],
             default => null,
         };
     }

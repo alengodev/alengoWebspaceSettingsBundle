@@ -41,14 +41,17 @@ class WebspaceSettings
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $locale = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
-    private ?bool $enabled = true;
-
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     private ?bool $execute = false;
 
     #[ORM\Column(type: Types::JSON)]
     private ?array $executeLog = [];
+
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private ?bool $protected = false;
+
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
+    private ?bool $enabled = true;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private $created;
@@ -137,16 +140,6 @@ class WebspaceSettings
         $this->locale = $locale;
     }
 
-    public function getEnabled(): ?bool
-    {
-        return $this->enabled;
-    }
-
-    public function setEnabled(?bool $enabled): void
-    {
-        $this->enabled = $enabled ?? true;
-    }
-
     public function getExecute(): ?bool
     {
         return $this->execute;
@@ -165,6 +158,26 @@ class WebspaceSettings
     public function setExecuteLog(?array $executeLog): void
     {
         $this->executeLog = $executeLog ?? [];
+    }
+
+    public function getProtected(): ?bool
+    {
+        return $this->protected;
+    }
+
+    public function setProtected(?bool $protected): void
+    {
+        $this->protected = $protected ?? false;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(?bool $enabled): void
+    {
+        $this->enabled = $enabled ?? true;
     }
 
     public function getCreated(): \DateTimeImmutable

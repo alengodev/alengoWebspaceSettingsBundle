@@ -35,7 +35,9 @@
         "block_textEditor": "Text editor",
         "execute": "execute",
         "execute_log": "Execute log",
-        "protect": "protect",
-        "protect_info": "Protects the webspace setting from changes. Only the creator or administrator can change it."
+        "protected": "protected",
+        "protected_info": "Protects the webspace setting from changes. Only the creator or administrator can change it.",
+        "localization": "Localization",
+        "localization_mandatory": "Localization *"
     }
 }

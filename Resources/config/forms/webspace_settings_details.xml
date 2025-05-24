@@ -191,7 +191,7 @@
 
         <property name="locale" type="custom_urls_locale_select" visibleCondition="type == 'stringLocale' or type == 'blocksLocale'">
             <meta>
-                <title>sulu_custom_url.target_locale</title>
+                <title>alengo_webspace_settings.localization_mandatory</title>
             </meta>
         </property>
 
@@ -218,14 +218,14 @@
             </meta>
         </property>
 
-        <property name="protect" type="checkbox" visibleCondition="showOptions == true" colspan="6">
+        <property name="protected" type="checkbox" visibleCondition="showOptions == true">
             <meta>
-                <info_text>alengo_webspace_settings.protect_info</info_text>
+                <info_text>alengo_webspace_settings.protected_info</info_text>
             </meta>
             <params>
                 <param name="label">
                     <meta>
-                        <title>alengo_webspace_settings.protect</title>
+                        <title>alengo_webspace_settings.protected</title>
                     </meta>
                 </param>
                 <param name="default_value" value="false"/>
@@ -233,7 +233,7 @@
             </params>
         </property>
 
-        <property name="enabled" type="checkbox" visibleCondition="showOptions == true" colspan="6">
+        <property name="enabled" type="checkbox" visibleCondition="showOptions == true">
             <meta>
                 <info_text>alengo_webspace_settings.enabled_info</info_text>
             </meta>

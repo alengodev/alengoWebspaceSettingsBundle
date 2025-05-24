@@ -123,7 +123,7 @@ class WebspaceSettings
     public function getDataMedias(): array
     {
         return match ($this->entity->getType()) {
-            'medias' => $this->entity->getData(),
+            'medias' => $this->entity->getData()[0],
             default => [],
         };
     }
@@ -145,7 +145,7 @@ class WebspaceSettings
     public function getDataContacts(): array
     {
         return match ($this->entity->getType()) {
-            'contacts' => $this->entity->getData(),
+            'contacts' => $this->entity->getData()[0],
             default => [],
         };
     }
@@ -167,7 +167,7 @@ class WebspaceSettings
     public function getDataAccounts(): array
     {
         return match ($this->entity->getType()) {
-            'organizations' => $this->entity->getData(),
+            'organizations' => $this->entity->getData()[0],
             default => [],
         };
     }
@@ -178,7 +178,7 @@ class WebspaceSettings
     public function getDataBlocks(): array
     {
         return match ($this->entity->getType()) {
-            'blocks', 'blocksLocale' => $this->entity->getData(),
+            'blocks', 'blocksLocale' => $this->entity->getData()[0],
             default => [],
         };
     }
@@ -189,14 +189,6 @@ class WebspaceSettings
     public function getLocale(): string
     {
         return $this->entity->getLocale();
-    }
-
-    #[SerializedName('enabled')]
-    #[VirtualProperty()]
-    #[Groups(['fullWebspaceSettings'])]
-    public function getEnabled(): bool
-    {
-        return $this->entity->getEnabled();
     }
 
     #[SerializedName('execute')]
@@ -213,6 +205,22 @@ class WebspaceSettings
     public function getExecuteLog(): string
     {
         return $this->getDataAsJsonElement($this->entity->getExecuteLog());
+    }
+
+    #[SerializedName('protected')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getProtected(): bool
+    {
+        return $this->entity->getProtected();
+    }
+
+    #[SerializedName('enabled')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getEnabled(): bool
+    {
+        return $this->entity->getEnabled();
     }
 
     #[SerializedName('created')]
