@@ -9,6 +9,7 @@ use Alengo\Bundle\AlengoWebspaceSettingsBundle\Api\WebspaceSettings as WebspaceS
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsCreatedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsUpdatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Model\WebspaceSettings as WebspaceSettingsModel;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
@@ -46,12 +47,20 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     public function cgetAction(Request $request): Response
     {
         $webspace = $request->query->get('webspace');
+        if (!$webspace) {
+            throw new NotFoundHttpException('Webspace not found');
+        }
 
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->findBy([
             'webspaceKey' => $webspace,
         ]);
 
-        $list = new CollectionRepresentation($webspaceSettings, 'webspace_settings');
+        try {
+            $webspaceSettingsForListView = $this->generateApiWebspaceSettingsEntityCollection($webspaceSettings);
+        } catch (\JsonException $e) {
+            throw new NotFoundHttpException('Webspace settings not found', $e);
+        }
+        $list = new CollectionRepresentation($webspaceSettingsForListView, 'webspace_settings');
 
         return $this->handleView($this->view($list, 200));
     }
@@ -66,7 +75,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     {
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
         if (!$webspaceSettings instanceof WebspaceSettings) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Webspace settings not found');
         }
 
         $apiEntity = $this->generateApiWebspaceSettingsEntity($webspaceSettings);
@@ -84,15 +93,26 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     public function postAction(Request $request): Response
     {
         $webspace = $request->query->get('webspace');
+        if (!$webspace) {
+            throw new NotFoundHttpException('Webspace not found');
+        }
+
+        $userId = $this->getUser()->getId();
+        $formData = $request->request->all();
+        $checkData = $this->mapDataByType($formData['type'], $formData);
+
+        if (null === $checkData[0] || '' === $checkData[0]) {
+            throw new NotFoundHttpException('No data provided for type ' . $formData['type']);
+        }
 
         $webspaceSettings = new WebspaceSettings();
 
-        $this->mapDataToEntity($request->request->all(), $webspaceSettings);
+        $this->mapDataToEntity($formData, $webspaceSettings);
         $webspaceSettings->setWebspaceKey($webspace);
         $webspaceSettings->setCreated(new \DateTimeImmutable());
         $webspaceSettings->setChanged(new \DateTime());
-        $webspaceSettings->setIdUsersCreator($this->getUser()->getId());
-        $webspaceSettings->setIdUsersChanger($this->getUser()->getId());
+        $webspaceSettings->setIdUsersCreator($userId);
+        $webspaceSettings->setIdUsersChanger($userId);
 
         $this->entityManager->persist($webspaceSettings);
         $this->entityManager->flush();
@@ -114,14 +134,28 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     )]
     public function putAction(Request $request, int $id): Response
     {
+        $userId = $this->getUser()->getId();
+        $userRoles = $this->getUser()->getRoles();
+        $formData = $request->request->all();
+        $checkData = $this->mapDataByType($formData['type'], $formData);
+
+        if (null === $checkData[0] || '' === $checkData[0]) {
+            throw new NotFoundHttpException('No data provided for type ' . $formData['type']);
+        }
+
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->find($id);
         if (!$webspaceSettings instanceof WebspaceSettings) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Webspace settings not found');
         }
-        $webspaceSettings->setChanged(new \DateTime());
-        $webspaceSettings->setIdUsersChanger($this->getUser()->getId());
 
-        $this->mapDataToEntity($request->request->all(), $webspaceSettings);
+        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
+            throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
+        }
+
+        $webspaceSettings->setChanged(new \DateTime());
+        $webspaceSettings->setIdUsersChanger($userId);
+
+        $this->mapDataToEntity($formData, $webspaceSettings);
         $this->entityManager->flush();
 
         // Event dispatching
@@ -156,36 +190,25 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setData($this->mapDataByType($data['type'], $data));
         $entity->setDescription($data['description']);
         $entity->setLocale($this->mapLocaleByType($data['type'], $data));
-        $entity->setEnabled($data['enabled']);
         $entity->setExecute($this->mapExecuteByType($data['type'], $data));
+        $entity->setEnabled($data['enabled']);
+        $entity->setProtected($data['protected']);
     }
 
-    protected function mapDataByType($type, $data): array
+    protected function mapDataByType($type, $data): array|null
     {
         return match ($type) {
-            'string', 'stringLocale' => [
-                $data['dataString'] ?? '',
-            ],
-            'event' => [
-                $data['dataEvent'] ?? '',
-            ],
-            'media' => [
-                $data['dataMedia'] ?? [
-                    'displayOptions' => null,
-                    'id' => null,
-                ],
-            ],
-            'medias' => $data['dataMedias'] ?? [],
-            'contact' => [
-                $data['dataContact'] ?? '',
-            ],
-            'contacts' => $data['dataContacts'] ?? [],
-            'organization' => [
-                $data['dataAccount'] ?? '',
-            ],
-            'organizations' => $data['dataAccounts'] ?? [],
-            'blocks', 'blocksLocale' => $data['dataBlocks'] ?? [],
-            default => [],
+            'string' => [$data['dataString'] ?? null],
+            'stringLocale' => [(!empty($data['dataString']) && !empty($data['locale'])) ? $data['dataString'] : null],
+            'event' => [$data['dataEvent'] ?? null],
+            'media' => [$data['dataMedia'] ?? null],
+            'medias' => [$data['dataMedias'] ?? null],
+            'contact' => [$data['dataContact'] ?? null],
+            'contacts' => [$data['dataContacts'] ?? null],
+            'organization' => [$data['dataAccount'] ?? null],
+            'organizations' => [$data['dataAccounts'] ?? null],
+            'blocks', 'blocksLocale' => [$data['dataBlocks'] ?? null],
+            default => null,
         };
     }
 
@@ -221,15 +244,31 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return \lcfirst(\str_replace(' ', '', \ucwords(\trim((string) $string))));
     }
 
-    protected function generateShortKey(int $length = 8): string
+    protected function generateApiWebspaceSettingsEntityCollection(array $entities): array
     {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $key = '';
-        for ($i = 0; $i < $length; ++$i) {
-            $key .= $characters[\random_int(0, \strlen($characters) - 1)];
+        $apiEntities = [];
+        foreach ($entities as $entity) {
+            if (!$entity instanceof WebspaceSettings) {
+                throw new NotFoundHttpException('Webspace settings not found');
+            }
+
+            $apiEntry = $this->handleView($this->generateViewContent($this->generateApiWebspaceSettingsEntity($entity)));
+            $apiArray = \json_decode((string) $apiEntry->getContent(), true, 512, \JSON_THROW_ON_ERROR);
+
+            $apiModel = new WebspaceSettingsModel();
+            $apiModel->setId($apiArray['id'] ?? null);
+            $apiModel->setTitle($apiArray['title'] ?? null);
+            $apiModel->setType($apiArray['type'] ?? null);
+            $apiModel->setTypeKey($apiArray['typeKey'] ?? null);
+            $apiModel->setData($apiArray['dataListView'] ?? null);
+            $apiModel->setLocale($apiArray['locale'] ?? null);
+            $apiModel->setCreated(new \DateTimeImmutable($apiArray['created']) ?? null);
+            $apiModel->setChanged(new \DateTime($apiArray['changed']) ?? null);
+
+            $apiEntities[] = $apiModel;
         }
 
-        return $key;
+        return $apiEntities;
     }
 
     protected function generateApiWebspaceSettingsEntity(WebspaceSettings $entity): WebspaceSettingsApi

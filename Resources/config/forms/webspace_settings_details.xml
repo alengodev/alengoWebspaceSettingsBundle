@@ -25,57 +25,57 @@
                 <param name="values" type="collection">
                     <param name="string">
                         <meta>
-                            <title>String</title>
+                            <title>alengo_webspace_settings.string</title>
                         </meta>
                     </param>
                     <param name="stringLocale">
                         <meta>
-                            <title>String localized</title>
+                            <title>alengo_webspace_settings.string_localized</title>
                         </meta>
                     </param>
                     <param name="event">
                         <meta>
-                            <title>Event</title>
+                            <title>alengo_webspace_settings.event</title>
                         </meta>
                     </param>
                     <param name="media">
                         <meta>
-                            <title>Media</title>
+                            <title>alengo_webspace_settings.media</title>
                         </meta>
                     </param>
                     <param name="medias">
                         <meta>
-                            <title>Medias</title>
+                            <title>alengo_webspace_settings.medias</title>
                         </meta>
                     </param>
                     <param name="contact">
                         <meta>
-                            <title>Contact</title>
+                            <title>alengo_webspace_settings.contact</title>
                         </meta>
                     </param>
                     <param name="contacts">
                         <meta>
-                            <title>Contacts</title>
+                            <title>alengo_webspace_settings.contacts</title>
                         </meta>
                     </param>
                     <param name="organization">
                         <meta>
-                            <title>Organization</title>
+                            <title>alengo_webspace_settings.organization</title>
                         </meta>
                     </param>
                     <param name="organizations">
                         <meta>
-                            <title>Organizations</title>
+                            <title>alengo_webspace_settings.organizations</title>
                         </meta>
                     </param>
                     <param name="blocks">
                         <meta>
-                            <title>Block</title>
+                            <title>alengo_webspace_settings.block</title>
                         </meta>
                     </param>
                     <param name="blocksLocale">
                         <meta>
-                            <title>Block localized</title>
+                            <title>alengo_webspace_settings.block_localized</title>
                         </meta>
                     </param>
                 </param>
@@ -91,21 +91,20 @@
 
         <property name="dataString" type="text_line" visibleCondition="type == 'string' or type == 'stringLocale'">
             <meta>
-                <title>String</title>
+                <title>alengo_webspace_settings.string_mandatory</title>
             </meta>
         </property>
 
-        <property name="dataEvent" type="text_line" visibleCondition="type == 'event'" colspan="10">
+        <property name="dataEvent" type="text_line" visibleCondition="type == 'event'" disabledCondition="!('ROLE_SULU_ADMIN' in __user.roles)" colspan="10">
             <meta>
-                <title>Event</title>
+                <title>alengo_webspace_settings.event_mandatory</title>
                 <info_text>alengo_webspace_settings.event_info</info_text>
             </meta>
         </property>
 
-        <property name="execute" type="checkbox" visibleCondition="type == 'event'" colspan="2">
+        <property name="execute" type="checkbox" visibleCondition="type == 'event'" disabledCondition="!('ROLE_SULU_ADMIN' in __user.roles)" colspan="2">
             <meta>
-                <title lang="en">execute</title>
-                <title lang="de">ausführen</title>
+                <title>alengo_webspace_settings.execute</title>
             </meta>
             <params>
                 <param name="type" value="toggler"/>
@@ -114,50 +113,49 @@
 
         <property name="dataMedia" type="single_media_selection" visibleCondition="type == 'media'">
             <meta>
-                <title>Media</title>
+                <title>alengo_webspace_settings.media_mandatory</title>
             </meta>
         </property>
 
         <property name="dataMedias" type="media_selection" visibleCondition="type == 'medias'">
             <meta>
-                <title>Media</title>
+                <title>alengo_webspace_settings.medias_mandatory</title>
             </meta>
         </property>
 
         <property name="dataContact" type="single_contact_selection" visibleCondition="type == 'contact'">
             <meta>
-                <title>Contact</title>
+                <title>alengo_webspace_settings.contact_mandatory</title>
             </meta>
         </property>
 
         <property name="dataContacts" type="contact_selection" visibleCondition="type == 'contacts'">
             <meta>
-                <title>Contacts</title>
+                <title>alengo_webspace_settings.contacts_mandatory</title>
             </meta>
         </property>
 
         <property name="dataAccount" type="single_account_selection" visibleCondition="type == 'organization'">
             <meta>
-                <title>Organization</title>
+                <title>alengo_webspace_settings.organization_mandatory</title>
             </meta>
         </property>
 
         <property name="dataAccounts" type="account_selection" visibleCondition="type == 'organizations'">
             <meta>
-                <title>Organizations</title>
+                <title>alengo_webspace_settings.organizations_mandatory</title>
             </meta>
         </property>
 
         <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks' or type == 'blocksLocale'">
             <meta>
-                <title>Block</title>
+                <title>alengo_webspace_settings.block_mandatory</title>
             </meta>
 
             <types>
                 <type name="singleMediaSelection">
                     <meta>
-                        <title lang="en">Single media selection</title>
-                        <title lang="de">Auswahl einzelner Medien</title>
+                        <title>alengo_webspace_settings.block_singleMediaSelection</title>
                     </meta>
 
                     <properties>
@@ -168,8 +166,7 @@
                 </type>
                 <type name="mediaSelection">
                     <meta>
-                        <title lang="en">Media selection</title>
-                        <title lang="de">Medien Auswahl</title>
+                        <title>alengo_webspace_settings.block_mediaSelection</title>
                     </meta>
 
                     <properties>
@@ -180,8 +177,7 @@
                 </type>
                 <type name="textEditor">
                     <meta>
-                        <title lang="en">Text editor</title>
-                        <title lang="de">Text Editor</title>
+                        <title>alengo_webspace_settings.block_textEditor</title>
                     </meta>
 
                     <properties>
@@ -195,7 +191,7 @@
 
         <property name="locale" type="custom_urls_locale_select" visibleCondition="type == 'stringLocale' or type == 'blocksLocale'">
             <meta>
-                <title>sulu_custom_url.target_locale</title>
+                <title>alengo_webspace_settings.localization_mandatory</title>
             </meta>
         </property>
 
@@ -218,8 +214,23 @@
 
         <property name="executeLog" type="text_area" disabledCondition="true" visibleCondition="showOptions == true and type == 'event'">
             <meta>
-                <title>Execute Log</title>
+                <title>alengo_webspace_settings.execute_log</title>
             </meta>
+        </property>
+
+        <property name="protected" type="checkbox" visibleCondition="showOptions == true">
+            <meta>
+                <info_text>alengo_webspace_settings.protected_info</info_text>
+            </meta>
+            <params>
+                <param name="label">
+                    <meta>
+                        <title>alengo_webspace_settings.protected</title>
+                    </meta>
+                </param>
+                <param name="default_value" value="false"/>
+                <param name="type" value="toggler" />
+            </params>
         </property>
 
         <property name="enabled" type="checkbox" visibleCondition="showOptions == true">
