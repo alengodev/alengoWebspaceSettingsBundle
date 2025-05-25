@@ -2,6 +2,8 @@
 Sometimes you need to store values that are not directly related to a specific page or content type, but rather to the entire webspace.
 This Sulu bundle provides a way to manage such settings in a structured manner.
 
+![Screenshot of Sulu AlengoWebspaceSettingsBundle](sulu.png)
+
 ### Requirements
 
 * PHP 8.2
@@ -48,12 +50,12 @@ The bundle provides a Twig extension to render the webspace settings in your tem
 You can use the `webspaceSettings` function to retrieve the settings for a specific webspace and typeKey.
 
 ```twig
-{{ webspaceSettings('typeKey') }}
+{{ webspaceSettings('metaPublisher') }}
 ```
 with localization
 
 ```twig
-{{ webspaceSettings('typeKey', app.request.locale) }}
+{{ webspaceSettings('metaTitleFallBack', app.request.locale) }}
 ```
 
 ### Events
