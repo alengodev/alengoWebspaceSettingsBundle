@@ -39,7 +39,7 @@ class WebspaceSettingsExtension extends AbstractExtension
         $queryParameter = [
             'typeKey' => $typeKey,
             'webspaceKey' => $requestWebspaceKey,
-            'enabled' => true,
+            'published' => true,
         ];
 
         if ($locale) {

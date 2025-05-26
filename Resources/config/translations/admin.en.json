@@ -5,10 +5,10 @@
         "type_key": "Type key",
         "type_key_info": "Type key is formated automatically and must be unique.",
         "data": "Data",
-        "enable": "enable",
-        "enabled": "enabled",
-        "enabled_info": "Enable or disable the current webspace setting.",
-        "show_options": "show more options",
+        "publish": "publish",
+        "published": "published",
+        "published_info": "Publish or unpublish the current webspace setting.",
+        "show_options": "Show more options",
         "event_info": "Command, Message or Event that can be triggered with WebspaceSettingsCreatedEvent or WebspaceSettingsUpdatedEvent. Only for admins.",
         "string": "String",
         "string_mandatory": "String *",
@@ -19,6 +19,10 @@
         "media_mandatory": "Media *",
         "medias": "Medias",
         "medias_mandatory": "Medias *",
+        "page": "Page",
+        "page_mandatory": "Page *",
+        "pages": "Pages",
+        "pages_mandatory": "Pages *",
         "contact": "Contact",
         "contact_mandatory": "Contact *",
         "contacts": "Contacts",
@@ -40,5 +44,10 @@
         "protected_info": "Protects the webspace setting from changes. Only the creator or administrator can change it.",
         "localization": "Localization",
         "localization_mandatory": "Localization *"
+    },
+    "sulu_activity": {
+        "resource": {
+            "webspace_settings": "Webspace settings"
+        }
     }
 }

@@ -8,6 +8,7 @@ use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Api\WebspaceSettings as WebspaceSettingsApi;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsCreatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsDeletedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsUpdatedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Model\WebspaceSettings as WebspaceSettingsModel;
 use Doctrine\ORM\EntityManagerInterface;
@@ -165,7 +166,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             throw new NotFoundHttpException('Webspace settings not found');
         }
 
-        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
+        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->isProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
             throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
         }
 
@@ -200,9 +201,15 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             throw new NotFoundHttpException('Webspace settings not found');
         }
 
-        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
+        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->isProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
             throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
         }
+
+        // Event dispatching
+        $this->eventDispatcher->dispatch(
+            new WebspaceSettingsDeletedEvent($webspaceSettings),
+            WebspaceSettingsDeletedEvent::class,
+        );
 
         $this->entityManager->remove($webspaceSettings);
         $this->entityManager->flush();
@@ -217,9 +224,9 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setTypeKey($this->generateTypeKey($data['title'], $data['typeKey'] ?? ''));
         $entity->setData($this->mapDataByType($data['type'], $data));
         $entity->setDescription($data['description']);
-        $entity->setLocale($this->mapLocaleByType($data['type'], $data));
+        $entity->setLocale($this->mapLocale($data));
         $entity->setExecute($this->mapExecuteByType($data['type'], $data));
-        $entity->setEnabled($data['enabled']);
+        $entity->setPublished($data['published']);
         $entity->setProtected($data['protected']);
     }
 
@@ -227,23 +234,24 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     {
         return match ($type) {
             'string' => [$data['dataString'] ?? null],
-            'stringLocale' => [(!empty($data['dataString']) && !empty($data['locale'])) ? $data['dataString'] : null],
             'event' => [$data['dataEvent'] ?? null],
             'media' => [$data['dataMedia'] ?? null],
             'medias' => [$data['dataMedias'] ?? null],
+            'page' => [$data['dataPage'] ?? null],
+            'pages' => [$data['dataPages'] ?? null],
             'contact' => [$data['dataContact'] ?? null],
             'contacts' => [$data['dataContacts'] ?? null],
             'organization' => [$data['dataAccount'] ?? null],
             'organizations' => [$data['dataAccounts'] ?? null],
-            'blocks', 'blocksLocale' => [$data['dataBlocks'] ?? null],
+            'blocks' => [$data['dataBlocks'] ?? null],
             default => null,
         };
     }
 
-    private function mapLocaleByType($type, $data): string
+    private function mapLocale($data): string
     {
-        return match ($type) {
-            'stringLocale', 'blocksLocale' => $data['locale'] ?? '',
+        return match ($data['localeActivated']) {
+            true => $data['locale'] ?? '',
             default => '',
         };
     }
@@ -286,6 +294,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             $apiModel = new WebspaceSettingsModel();
             $apiModel->setId($apiArray['id'] ?? null);
             $apiModel->setTitle($apiArray['title'] ?? null);
+            $apiModel->setPublished(true === $apiArray['published'] ? null : false);
             $apiModel->setType($apiArray['type'] ?? null);
             $apiModel->setTypeKey($apiArray['typeKey'] ?? null);
             $apiModel->setData($apiArray['dataListView'] ?? null);

@@ -87,7 +87,7 @@ class WebspaceSettings
     public function getDataString(): string
     {
         return match ($this->entity->getType()) {
-            'string', 'stringLocale' => $this->entity->getData()[0],
+            'string' => $this->entity->getData()[0],
             default => '',
         };
     }
@@ -124,6 +124,27 @@ class WebspaceSettings
     {
         return match ($this->entity->getType()) {
             'medias' => $this->entity->getData()[0],
+            default => [],
+        };
+    }
+    #[SerializedName('dataPage')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataPage(): int|string|null
+    {
+        return match ($this->entity->getType()) {
+            'page' => $this->entity->getData()[0],
+            default => null,
+        };
+    }
+
+    #[SerializedName('dataPages')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataPages(): array
+    {
+        return match ($this->entity->getType()) {
+            'pages' => $this->entity->getData()[0],
             default => [],
         };
     }
@@ -178,7 +199,7 @@ class WebspaceSettings
     public function getDataBlocks(): array
     {
         return match ($this->entity->getType()) {
-            'blocks', 'blocksLocale' => $this->entity->getData()[0],
+            'blocks' => $this->entity->getData()[0],
             default => [],
         };
     }
@@ -189,6 +210,14 @@ class WebspaceSettings
     public function getDataListView(): string
     {
         return $this->getDataAsJsonElement($this->entity->getData());
+    }
+
+    #[SerializedName('localeActivated')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function isLocaleActivated(): bool
+    {
+        return (bool)$this->entity->getLocale();
     }
 
     #[SerializedName('locale')]
@@ -218,17 +247,17 @@ class WebspaceSettings
     #[SerializedName('protected')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
-    public function getProtected(): bool
+    public function isProtected(): bool
     {
-        return $this->entity->getProtected();
+        return $this->entity->isProtected();
     }
 
-    #[SerializedName('enabled')]
+    #[SerializedName('published')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
-    public function getEnabled(): bool
+    public function isPublished(): bool
     {
-        return $this->entity->getEnabled();
+        return $this->entity->isPublished();
     }
 
     #[SerializedName('created')]
