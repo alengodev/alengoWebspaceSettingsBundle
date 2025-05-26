@@ -17,6 +17,7 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\ListBuilder\CollectionRepresentation;
+use Sulu\Component\Rest\ListBuilder\ListRepresentation;
 use Sulu\Component\Security\SecuredControllerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,16 +52,32 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             throw new NotFoundHttpException('Webspace not found');
         }
 
-        $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->findBy([
+        $query = $this->entityManager->getRepository(WebspaceSettings::class)->findByListQuery([
             'webspaceKey' => $webspace,
+            'sortBy' => $request->query->get('sortBy'),
+            'sortOrder' => $request->query->get('sortOrder'),
+            'fields' => $request->query->get('fields'),
+            'search' => $request->query->get('search'),
+            'page' => $request->query->get('page', 1),
+            'limit' => $request->query->get('limit', 10),
         ]);
 
         try {
-            $webspaceSettingsForListView = $this->generateApiWebspaceSettingsEntityCollection($webspaceSettings);
+            $webspaceSettingsForListView = $this->generateApiWebspaceSettingsEntityCollection($query['result']);
         } catch (\JsonException $e) {
             throw new NotFoundHttpException('Webspace settings not found', $e);
         }
-        $list = new CollectionRepresentation($webspaceSettingsForListView, 'webspace_settings');
+        // $list = new CollectionRepresentation($webspaceSettingsForListView, 'webspace_settings');
+
+        $list = new ListRepresentation(
+            $webspaceSettingsForListView,
+            WebspaceSettings::RESOURCE_KEY,
+            'cget_webspace-settings',
+            $request->query->all(),
+            $query['page'],
+            $query['limit'],
+            $query['total'],
+        );
 
         return $this->handleView($this->view($list, 200));
     }

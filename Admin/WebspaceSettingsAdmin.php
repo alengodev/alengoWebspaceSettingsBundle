@@ -43,7 +43,6 @@ class WebspaceSettingsAdmin extends Admin
                     ->addAdapterOptions(['table' => ['skin' => 'light']])
                     ->addRouterAttributesToListRequest(['webspace'])
                     ->addRouterAttributesToFormRequest(['webspace'])
-                    ->disableSearching()
                     ->setFormKey('webspace_settings_details')
                     ->setTabTitle('alengo_webspace_settings.title')
                     ->setTabOrder(8096)
