@@ -166,7 +166,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             throw new NotFoundHttpException('Webspace settings not found');
         }
 
-        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
+        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->isProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
             throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
         }
 
@@ -201,7 +201,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             throw new NotFoundHttpException('Webspace settings not found');
         }
 
-        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
+        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->isProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
             throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
         }
 
@@ -226,7 +226,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setDescription($data['description']);
         $entity->setLocale($this->mapLocaleByType($data['type'], $data));
         $entity->setExecute($this->mapExecuteByType($data['type'], $data));
-        $entity->setEnabled($data['enabled']);
+        $entity->setPublished($data['published']);
         $entity->setProtected($data['protected']);
     }
 
@@ -293,6 +293,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             $apiModel = new WebspaceSettingsModel();
             $apiModel->setId($apiArray['id'] ?? null);
             $apiModel->setTitle($apiArray['title'] ?? null);
+            $apiModel->setPublished($apiArray['published'] === true ? null : false);
             $apiModel->setType($apiArray['type'] ?? null);
             $apiModel->setTypeKey($apiArray['typeKey'] ?? null);
             $apiModel->setData($apiArray['dataListView'] ?? null);

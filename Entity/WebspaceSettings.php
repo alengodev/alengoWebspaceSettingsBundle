@@ -51,7 +51,7 @@ class WebspaceSettings
     private ?bool $protected = false;
 
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
-    private ?bool $enabled = true;
+    private ?bool $published = true;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $created = null;
@@ -160,7 +160,7 @@ class WebspaceSettings
         $this->executeLog = $executeLog ?? [];
     }
 
-    public function getProtected(): ?bool
+    public function isProtected(): ?bool
     {
         return $this->protected;
     }
@@ -170,14 +170,14 @@ class WebspaceSettings
         $this->protected = $protected ?? false;
     }
 
-    public function getEnabled(): ?bool
+    public function isPublished(): ?bool
     {
-        return $this->enabled;
+        return $this->published;
     }
 
-    public function setEnabled(?bool $enabled): void
+    public function setPublished(?bool $published): void
     {
-        $this->enabled = $enabled ?? true;
+        $this->published = $published ?? true;
     }
 
     public function getCreated(): \DateTimeImmutable

@@ -233,14 +233,14 @@
             </params>
         </property>
 
-        <property name="enabled" type="checkbox" visibleCondition="showOptions == true">
+        <property name="published" type="checkbox" visibleCondition="showOptions == true">
             <meta>
-                <info_text>alengo_webspace_settings.enabled_info</info_text>
+                <info_text>alengo_webspace_settings.published_info</info_text>
             </meta>
             <params>
                 <param name="label">
                     <meta>
-                        <title>alengo_webspace_settings.enabled</title>
+                        <title>alengo_webspace_settings.published</title>
                     </meta>
                 </param>
                 <param name="default_value" value="true"/>

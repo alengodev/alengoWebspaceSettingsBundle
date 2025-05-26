@@ -37,8 +37,8 @@ final class WebsiteSettingsTrashItemHandler implements
             'locale' => $websiteSettings->getLocale(),
             'execute' => $websiteSettings->getExecute(),
             'executeLog' => $websiteSettings->getExecuteLog(),
-            'protected' => $websiteSettings->getProtected(),
-            'enabled' => $websiteSettings->getEnabled(),
+            'protected' => $websiteSettings->isProtected(),
+            'published' => $websiteSettings->isPublished(),
             'created' => $websiteSettings->getCreated(),
             'changed' => $websiteSettings->getChanged(),
             'idUsersCreator' => $websiteSettings->getIdUsersCreator(),
@@ -74,7 +74,7 @@ final class WebsiteSettingsTrashItemHandler implements
         $webspaceSettings->setExecute($data['execute']);
         $webspaceSettings->setExecuteLog($data['executeLog']);
         $webspaceSettings->setProtected($data['protected']);
-        $webspaceSettings->setEnabled(false);
+        $webspaceSettings->setPublished(false);
         $webspaceSettings->setCreated(new \DateTimeImmutable($data['created']['date']));
         $webspaceSettings->setChanged(new \DateTime($data['changed']['date']));
         $webspaceSettings->setIdUsersCreator($data['idUsersCreator']);

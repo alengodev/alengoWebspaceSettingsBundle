@@ -8,6 +8,7 @@ class WebspaceSettings
 {
     private ?int $id = null;
     private ?string $title = null;
+    private ?bool $published = null;
     private ?string $type = null;
     private ?string $typeKey = null;
     private ?string $data = null;
@@ -33,6 +34,16 @@ class WebspaceSettings
     public function setTitle(?string $title): void
     {
         $this->title = $title;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(?bool $published): void
+    {
+        $this->published = $published;
     }
 
     public function getData(): string

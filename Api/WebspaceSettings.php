@@ -218,17 +218,17 @@ class WebspaceSettings
     #[SerializedName('protected')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
-    public function getProtected(): bool
+    public function isProtected(): bool
     {
-        return $this->entity->getProtected();
+        return $this->entity->isProtected();
     }
 
-    #[SerializedName('enabled')]
+    #[SerializedName('published')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]
-    public function getEnabled(): bool
+    public function isPublished(): bool
     {
-        return $this->entity->getEnabled();
+        return $this->entity->isPublished();
     }
 
     #[SerializedName('created')]
