@@ -46,6 +46,8 @@ class WebspaceSettingsRepository extends ServiceEntityRepository
 
         if (null !== $param['sortBy'] && null !== $param['sortOrder']) {
             $query->orderBy('w.' . $param['sortBy'], $param['sortOrder']);
+        }else{
+            $query->orderBy('w.id', 'DESC');
         }
 
         if (null !== $param['search'] && null !== $param['fields']) {

@@ -192,7 +192,18 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     )]
     public function deleteAction(int $id): Response
     {
+        $userId = $this->getUser()->getId();
+        $userRoles = $this->getUser()->getRoles();
+
         $webspaceSettings = $this->entityManager->getReference(WebspaceSettings::class, $id);
+        if (!$webspaceSettings instanceof WebspaceSettings) {
+            throw new NotFoundHttpException('Webspace settings not found');
+        }
+
+        if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
+            throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
+        }
+
         $this->entityManager->remove($webspaceSettings);
         $this->entityManager->flush();
 
