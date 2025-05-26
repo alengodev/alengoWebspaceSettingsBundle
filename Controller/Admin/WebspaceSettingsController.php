@@ -293,7 +293,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             $apiModel = new WebspaceSettingsModel();
             $apiModel->setId($apiArray['id'] ?? null);
             $apiModel->setTitle($apiArray['title'] ?? null);
-            $apiModel->setPublished($apiArray['published'] === true ? null : false);
+            $apiModel->setPublished(true === $apiArray['published'] ? null : false);
             $apiModel->setType($apiArray['type'] ?? null);
             $apiModel->setTypeKey($apiArray['typeKey'] ?? null);
             $apiModel->setData($apiArray['dataListView'] ?? null);
