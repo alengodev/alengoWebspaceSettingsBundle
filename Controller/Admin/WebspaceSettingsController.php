@@ -182,7 +182,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return $this->handleView($this->view(null, 204));
     }
 
-    protected function mapDataToEntity(array $data, WebspaceSettings $entity): void
+    private function mapDataToEntity(array $data, WebspaceSettings $entity): void
     {
         $entity->setTitle($data['title']);
         $entity->setType($data['type']);
@@ -195,7 +195,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setProtected($data['protected']);
     }
 
-    protected function mapDataByType($type, $data): array|null
+    private function mapDataByType($type, $data): array|null
     {
         return match ($type) {
             'string' => [$data['dataString'] ?? null],
@@ -212,7 +212,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         };
     }
 
-    protected function mapLocaleByType($type, $data): string
+    private function mapLocaleByType($type, $data): string
     {
         return match ($type) {
             'stringLocale', 'blocksLocale' => $data['locale'] ?? '',
@@ -220,15 +220,15 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         };
     }
 
-    protected function mapExecuteByType($type, $data): bool
+    private function mapExecuteByType($type, $data): bool
     {
         return match ($type) {
-            'event' => null !== $data['execute'],
+            'event' => false !== $data['execute'],
             default => false,
         };
     }
 
-    protected function generateTypeKey(string $title, string $typeKey = ''): string
+    private function generateTypeKey(string $title, string $typeKey = ''): string
     {
         $string = '' === $typeKey || '0' === $typeKey ? $title : $typeKey;
 
@@ -244,7 +244,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return \lcfirst(\str_replace(' ', '', \ucwords(\trim((string) $string))));
     }
 
-    protected function generateApiWebspaceSettingsEntityCollection(array $entities): array
+    private function generateApiWebspaceSettingsEntityCollection(array $entities): array
     {
         $apiEntities = [];
         foreach ($entities as $entity) {
@@ -271,12 +271,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return $apiEntities;
     }
 
-    protected function generateApiWebspaceSettingsEntity(WebspaceSettings $entity): WebspaceSettingsApi
+    private function generateApiWebspaceSettingsEntity(WebspaceSettings $entity): WebspaceSettingsApi
     {
         return new WebspaceSettingsApi($entity);
     }
 
-    protected function generateViewContent(WebspaceSettingsApi $entity): View
+    private function generateViewContent(WebspaceSettingsApi $entity): View
     {
         $view = $this->view($entity);
         $context = new Context();
