@@ -8,6 +8,7 @@ use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Api\WebspaceSettings as WebspaceSettingsApi;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsCreatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsDeletedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsUpdatedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Model\WebspaceSettings as WebspaceSettingsModel;
 use Doctrine\ORM\EntityManagerInterface;
@@ -203,6 +204,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         if (!\in_array('ROLE_SULU_ADMIN', $userRoles, true) && (true === $webspaceSettings->getProtected() && $webspaceSettings->getIdUsersCreator() !== $userId)) {
             throw new NotFoundHttpException('This webspace settings is protected and cannot be changed.');
         }
+
+        // Event dispatching
+        $this->eventDispatcher->dispatch(
+            new WebspaceSettingsDeletedEvent($webspaceSettings),
+            WebspaceSettingsDeletedEvent::class,
+        );
 
         $this->entityManager->remove($webspaceSettings);
         $this->entityManager->flush();

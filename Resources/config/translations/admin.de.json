@@ -40,5 +40,10 @@
         "protected_info": "Schützt die Webspace-Einstellung vor Änderungen. Nur der Ersteller oder Administrator kann sie ändern.",
         "localization": "Lokalisierung",
         "localization_mandatory": "Lokalisierung *"
+    },
+    "sulu_activity": {
+        "resource": {
+            "webspace_settings": "Webspace Einstellung"
+        }
     }
 }

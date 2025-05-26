@@ -40,5 +40,10 @@
         "protected_info": "Protects the webspace setting from changes. Only the creator or administrator can change it.",
         "localization": "Localization",
         "localization_mandatory": "Localization *"
+    },
+    "sulu_activity": {
+        "resource": {
+            "webspace_settings": "Webspace settings"
+        }
     }
 }

@@ -25,3 +25,21 @@ services:
 
     alengo_webspace_settings.repository.webspace_settings:
         alias: Alengo\Bundle\AlengoWebspaceSettingsBundle\Repository\WebspaceSettingsRepository
+
+    alengo_webspace_settings.trash_item_handler.webspace_settings:
+        class: Alengo\Bundle\AlengoWebspaceSettingsBundle\Trash\WebsiteSettingsTrashItemHandler
+        arguments:
+            - '@sulu_trash.trash_item_repository'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'sulu_trash.store_trash_item_handler' }
+            - { name: 'sulu_trash.restore_trash_item_handler' }
+            - { name: 'sulu_trash.restore_configuration_provider' }
+
+    alengo_webspace_settings.webspace_settings_trash_subscriber:
+        class: Alengo\Bundle\AlengoWebspaceSettingsBundle\EventSubscriber\WebspaceSettingsTrashSubscriber
+        arguments:
+            - '@sulu_trash.trash_manager'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'kernel.event_subscriber' }
