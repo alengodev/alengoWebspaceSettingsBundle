@@ -237,6 +237,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             'event' => [$data['dataEvent'] ?? null],
             'media' => [$data['dataMedia'] ?? null],
             'medias' => [$data['dataMedias'] ?? null],
+            'page' => [$data['dataPage'] ?? null],
+            'pages' => [$data['dataPages'] ?? null],
             'contact' => [$data['dataContact'] ?? null],
             'contacts' => [$data['dataContacts'] ?? null],
             'organization' => [$data['dataAccount'] ?? null],

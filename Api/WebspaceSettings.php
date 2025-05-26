@@ -127,6 +127,27 @@ class WebspaceSettings
             default => [],
         };
     }
+    #[SerializedName('dataPage')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataPage(): int|string|null
+    {
+        return match ($this->entity->getType()) {
+            'page' => $this->entity->getData()[0],
+            default => null,
+        };
+    }
+
+    #[SerializedName('dataPages')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataPages(): array
+    {
+        return match ($this->entity->getType()) {
+            'pages' => $this->entity->getData()[0],
+            default => [],
+        };
+    }
 
     #[SerializedName('dataContact')]
     #[VirtualProperty()]
