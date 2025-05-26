@@ -87,7 +87,7 @@ class WebspaceSettings
     public function getDataString(): string
     {
         return match ($this->entity->getType()) {
-            'string', 'stringLocale' => $this->entity->getData()[0],
+            'string' => $this->entity->getData()[0],
             default => '',
         };
     }
@@ -178,7 +178,7 @@ class WebspaceSettings
     public function getDataBlocks(): array
     {
         return match ($this->entity->getType()) {
-            'blocks', 'blocksLocale' => $this->entity->getData()[0],
+            'blocks' => $this->entity->getData()[0],
             default => [],
         };
     }
@@ -189,6 +189,14 @@ class WebspaceSettings
     public function getDataListView(): string
     {
         return $this->getDataAsJsonElement($this->entity->getData());
+    }
+
+    #[SerializedName('localeActivated')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function isLocaleActivated(): bool
+    {
+        return (bool)$this->entity->getLocale();
     }
 
     #[SerializedName('locale')]

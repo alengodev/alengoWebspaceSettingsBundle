@@ -8,7 +8,7 @@
         "publish": "publish",
         "published": "published",
         "published_info": "Publish or unpublish the current webspace setting.",
-        "show_options": "show more options",
+        "show_options": "Show more options",
         "event_info": "Command, Message or Event that can be triggered with WebspaceSettingsCreatedEvent or WebspaceSettingsUpdatedEvent. Only for admins.",
         "string": "String",
         "string_mandatory": "String *",

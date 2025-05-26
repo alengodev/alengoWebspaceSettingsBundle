@@ -224,7 +224,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $entity->setTypeKey($this->generateTypeKey($data['title'], $data['typeKey'] ?? ''));
         $entity->setData($this->mapDataByType($data['type'], $data));
         $entity->setDescription($data['description']);
-        $entity->setLocale($this->mapLocaleByType($data['type'], $data));
+        $entity->setLocale($this->mapLocale($data));
         $entity->setExecute($this->mapExecuteByType($data['type'], $data));
         $entity->setPublished($data['published']);
         $entity->setProtected($data['protected']);
@@ -234,7 +234,6 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     {
         return match ($type) {
             'string' => [$data['dataString'] ?? null],
-            'stringLocale' => [(!empty($data['dataString']) && !empty($data['locale'])) ? $data['dataString'] : null],
             'event' => [$data['dataEvent'] ?? null],
             'media' => [$data['dataMedia'] ?? null],
             'medias' => [$data['dataMedias'] ?? null],
@@ -242,15 +241,15 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             'contacts' => [$data['dataContacts'] ?? null],
             'organization' => [$data['dataAccount'] ?? null],
             'organizations' => [$data['dataAccounts'] ?? null],
-            'blocks', 'blocksLocale' => [$data['dataBlocks'] ?? null],
+            'blocks' => [$data['dataBlocks'] ?? null],
             default => null,
         };
     }
 
-    private function mapLocaleByType($type, $data): string
+    private function mapLocale($data): string
     {
-        return match ($type) {
-            'stringLocale', 'blocksLocale' => $data['locale'] ?? '',
+        return match ($data['localeActivated']) {
+            true => $data['locale'] ?? '',
             default => '',
         };
     }

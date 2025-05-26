@@ -28,11 +28,6 @@
                             <title>alengo_webspace_settings.string</title>
                         </meta>
                     </param>
-                    <param name="stringLocale">
-                        <meta>
-                            <title>alengo_webspace_settings.string_localized</title>
-                        </meta>
-                    </param>
                     <param name="event">
                         <meta>
                             <title>alengo_webspace_settings.event</title>
@@ -73,11 +68,6 @@
                             <title>alengo_webspace_settings.block</title>
                         </meta>
                     </param>
-                    <param name="blocksLocale">
-                        <meta>
-                            <title>alengo_webspace_settings.block_localized</title>
-                        </meta>
-                    </param>
                 </param>
             </params>
         </property>
@@ -89,7 +79,7 @@
             </meta>
         </property>
 
-        <property name="dataString" type="text_line" visibleCondition="type == 'string' or type == 'stringLocale'">
+        <property name="dataString" type="text_line" visibleCondition="type == 'string'">
             <meta>
                 <title>alengo_webspace_settings.string_mandatory</title>
             </meta>
@@ -147,7 +137,7 @@
             </meta>
         </property>
 
-        <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks' or type == 'blocksLocale'">
+        <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks'">
             <meta>
                 <title>alengo_webspace_settings.block_mandatory</title>
             </meta>
@@ -189,10 +179,18 @@
             </types>
         </block>
 
-        <property name="locale" type="custom_urls_locale_select" visibleCondition="type == 'stringLocale' or type == 'blocksLocale'">
-            <meta>
-                <title>alengo_webspace_settings.localization_mandatory</title>
-            </meta>
+        <property name="localeActivated" type="checkbox" colspan="4" visibleCondition="type == 'string' or type == 'blocks'">
+            <params>
+                <param name="type" value="toggler"/>
+                <param name="label">
+                    <meta>
+                        <title>alengo_webspace_settings.localization</title>
+                    </meta>
+                </param>
+            </params>
+        </property>
+
+        <property name="locale" type="custom_urls_locale_select" colspan="8" visibleCondition="localeActivated == true">
         </property>
 
         <property name="showOptions" type="checkbox">
