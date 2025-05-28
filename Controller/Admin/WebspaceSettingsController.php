@@ -234,6 +234,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     {
         return match ($type) {
             'string' => [$data['dataString'] ?? null],
+            'textArea' => [$data['dataTextArea'] ?? null],
+            'textEditor' => [$data['dataTextEditor'] ?? null],
             'event' => [$data['dataEvent'] ?? null],
             'media' => [$data['dataMedia'] ?? null],
             'medias' => [$data['dataMedias'] ?? null],

@@ -45,6 +45,31 @@ alengo_webspace_settings_api:
     name_prefix: alengo_webspace_settings.
  ```
 
+### Type Selection
+
+Set the property types you want to provide.
+
+config/packages/alengo_webspace_settings.yaml
+
+```yaml
+alengo_webspace_settings:
+    type_select:
+        - 'blocks'
+        - 'contact'
+        - 'contacts'
+        - 'event'
+        - 'media'
+        - 'medias'
+        - 'organization'
+        - 'organizations'
+        - 'page'
+        - 'pages'
+        - 'string' # default type
+        - 'textArea'
+        - 'textEditor'
+```
+
+
 ### Twig Extension
 The bundle provides a Twig extension to render the webspace settings in your templates.
 You can use the `webspaceSettings` function to retrieve the settings for a specific webspace and typeKey.
