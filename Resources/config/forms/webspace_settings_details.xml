@@ -19,66 +19,10 @@
             <meta>
                 <title>alengo_webspace_settings.type</title>
             </meta>
-            <params>
-                <param name="default_value" value="string"/>
 
-                <param name="values" type="collection">
-                    <param name="string">
-                        <meta>
-                            <title>alengo_webspace_settings.string</title>
-                        </meta>
-                    </param>
-                    <param name="media">
-                        <meta>
-                            <title>alengo_webspace_settings.media</title>
-                        </meta>
-                    </param>
-                    <param name="medias">
-                        <meta>
-                            <title>alengo_webspace_settings.medias</title>
-                        </meta>
-                    </param>
-                    <param name="page">
-                        <meta>
-                            <title>alengo_webspace_settings.page</title>
-                        </meta>
-                    </param>
-                    <param name="pages">
-                        <meta>
-                            <title>alengo_webspace_settings.pages</title>
-                        </meta>
-                    </param>
-                    <param name="contact">
-                        <meta>
-                            <title>alengo_webspace_settings.contact</title>
-                        </meta>
-                    </param>
-                    <param name="contacts">
-                        <meta>
-                            <title>alengo_webspace_settings.contacts</title>
-                        </meta>
-                    </param>
-                    <param name="organization">
-                        <meta>
-                            <title>alengo_webspace_settings.organization</title>
-                        </meta>
-                    </param>
-                    <param name="organizations">
-                        <meta>
-                            <title>alengo_webspace_settings.organizations</title>
-                        </meta>
-                    </param>
-                    <param name="blocks">
-                        <meta>
-                            <title>alengo_webspace_settings.block</title>
-                        </meta>
-                    </param>
-                    <param name="event">
-                        <meta>
-                            <title>alengo_webspace_settings.event</title>
-                        </meta>
-                    </param>
-                </param>
+            <params>
+                <param name="default_value" type="expression" value="service('alengo_webspace_settings.content.select.type_select').getSingleSelectDefaultValue()"/>
+                <param name="values" type="expression" value="service('alengo_webspace_settings.content.select.type_select').getValues(locale)"/>
             </params>
         </property>
 
@@ -92,6 +36,18 @@
         <property name="dataString" type="text_line" visibleCondition="type == 'string'">
             <meta>
                 <title>alengo_webspace_settings.string_mandatory</title>
+            </meta>
+        </property>
+
+        <property name="dataTextArea" type="text_area" visibleCondition="type == 'textArea'">
+            <meta>
+                <title>alengo_webspace_settings.textArea_mandatory</title>
+            </meta>
+        </property>
+
+        <property name="dataTextEditor" type="text_editor" visibleCondition="type == 'textEditor'">
+            <meta>
+                <title>alengo_webspace_settings.textEditor_mandatory</title>
             </meta>
         </property>
 
@@ -145,13 +101,13 @@
 
         <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks'">
             <meta>
-                <title>alengo_webspace_settings.block_mandatory</title>
+                <title>alengo_webspace_settings.blocks_mandatory</title>
             </meta>
 
             <types>
                 <type name="singleMediaSelection">
                     <meta>
-                        <title>alengo_webspace_settings.block_singleMediaSelection</title>
+                        <title>alengo_webspace_settings.media</title>
                     </meta>
 
                     <properties>
@@ -162,7 +118,7 @@
                 </type>
                 <type name="mediaSelection">
                     <meta>
-                        <title>alengo_webspace_settings.block_mediaSelection</title>
+                        <title>alengo_webspace_settings.medias</title>
                     </meta>
 
                     <properties>
@@ -173,7 +129,7 @@
                 </type>
                 <type name="textEditor">
                     <meta>
-                        <title>alengo_webspace_settings.block_textEditor</title>
+                        <title>alengo_webspace_settings.textEditor</title>
                     </meta>
 
                     <properties>

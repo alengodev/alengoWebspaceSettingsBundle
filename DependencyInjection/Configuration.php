@@ -23,6 +23,17 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        return new TreeBuilder('alengo_webspace_settings');
+        $treeBuilder = new TreeBuilder('alengo_webspace_settings');
+        $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode
+            ->children()
+                ->arrayNode('type_select')
+                    ->scalarPrototype()->end()
+                    ->defaultValue([])
+                ->end()
+            ->end();
+
+        return $treeBuilder;
     }
 }

@@ -43,3 +43,13 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: 'kernel.event_subscriber' }
+
+    Alengo\Bundle\AlengoWebspaceSettingsBundle\Content\Select\TypeSelect:
+        arguments:
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - '%alengo_webspace_settings.type_select%'
+        public: 'true'
+
+    alengo_webspace_settings.content.select.type_select:
+        alias: Alengo\Bundle\AlengoWebspaceSettingsBundle\Content\Select\TypeSelect
+        public: 'true'
