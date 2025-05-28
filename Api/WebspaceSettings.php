@@ -103,6 +103,28 @@ class WebspaceSettings
         };
     }
 
+    #[SerializedName('dataTextArea')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataTextArea(): string
+    {
+        return match ($this->entity->getType()) {
+            'textArea' => $this->entity->getData()[0],
+            default => '',
+        };
+    }
+
+    #[SerializedName('dataTextEditor')]
+    #[VirtualProperty()]
+    #[Groups(['fullWebspaceSettings'])]
+    public function getDataTextEditor(): string
+    {
+        return match ($this->entity->getType()) {
+            'textEditor' => $this->entity->getData()[0],
+            default => '',
+        };
+    }
+
     #[SerializedName('dataMedia')]
     #[VirtualProperty()]
     #[Groups(['fullWebspaceSettings'])]

@@ -75,5 +75,7 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
         $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $yamlLoader->load('services.yaml');
         $yamlLoader->load('controller.yaml');
+
+        $container->setParameter('alengo_webspace_settings.type_select', $config['type_select']);
     }
 }
