@@ -68,34 +68,6 @@ class WebspaceSettings
 
     private ?string $dataListView = '';
 
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
-
-    public function __set(string $name, $value): void
-    {
-        $this->$name = $value;
-    }
-
-    public function __call(string $method, array $arguments)
-    {
-        if (\str_starts_with($method, 'get')) {
-            $property = \lcfirst(\substr($method, 3));
-
-            return $this->__get($property);
-        }
-
-        if (\str_starts_with($method, 'set')) {
-            $property = \lcfirst(\substr($method, 3));
-            $this->__set($property, $arguments[0]);
-
-            return $this;
-        }
-
-        throw new \BadMethodCallException("Method {$method} does not exist.");
-    }
-
     public function getId(): ?int
     {
         return $this->id;

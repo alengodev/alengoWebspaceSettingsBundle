@@ -279,7 +279,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             if (!$entity instanceof WebspaceSettings) {
                 throw new NotFoundHttpException('Webspace settings not found');
             }
-            $entity->setPublishedListView($entity->getPublished());
+            $entity->setPublishedListView($entity->isPublished());
             $entity->setDataListView($entity->getData());
 
             $apiEntities[] = $entity;
