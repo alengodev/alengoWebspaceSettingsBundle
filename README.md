@@ -60,8 +60,8 @@ alengo_webspace_settings:
         - 'event'
         - 'media'
         - 'medias'
-        - 'organization'
-        - 'organizations'
+        - 'account'
+        - 'accounts'
         - 'page'
         - 'pages'
         - 'string' # default type

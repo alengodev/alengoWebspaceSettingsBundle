@@ -7,6 +7,7 @@ namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Repository\WebspaceSettingsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 #[ORM\Entity(repositoryClass: WebspaceSettingsRepository::class)]
 #[ORM\Table(name: 'we_settings')]
@@ -36,7 +37,7 @@ class WebspaceSettings
     private ?string $typeKey = null;
 
     #[ORM\Column(type: Types::JSON)]
-    private ?array $data = [];
+    private array|string|null $data = [];
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $locale = null;
@@ -64,6 +65,36 @@ class WebspaceSettings
 
     #[ORM\Column(name: 'idUsersChanger', type: Types::INTEGER)]
     private ?int $idUsersChanger = null;
+
+    private ?string $dataListView = '';
+
+    public function __get(string $name)
+    {
+        return $this->$name;
+    }
+
+    public function __set(string $name, $value): void
+    {
+        $this->$name = $value;
+    }
+
+    public function __call(string $method, array $arguments)
+    {
+        if (\str_starts_with($method, 'get')) {
+            $property = \lcfirst(\substr($method, 3));
+
+            return $this->__get($property);
+        }
+
+        if (\str_starts_with($method, 'set')) {
+            $property = \lcfirst(\substr($method, 3));
+            $this->__set($property, $arguments[0]);
+
+            return $this;
+        }
+
+        throw new \BadMethodCallException("Method {$method} does not exist.");
+    }
 
     public function getId(): ?int
     {
@@ -120,14 +151,16 @@ class WebspaceSettings
         $this->typeKey = $typeKey;
     }
 
-    public function getData(): ?array
+    public function getData(): array|string|null
     {
         return $this->data;
     }
 
-    public function setData(?array $data): void
+    public function setData(array|string|null $data): self
     {
         $this->data = $data;
+
+        return $this;
     }
 
     public function getLocale(): ?string
@@ -218,5 +251,25 @@ class WebspaceSettings
     public function setIdUsersChanger(?int $idUsersChanger): void
     {
         $this->idUsersChanger = $idUsersChanger;
+    }
+
+    public function toArray(): array
+    {
+        return \get_object_vars($this);
+    }
+
+    public function setPublishedListView(?bool $published): void
+    {
+        $this->published = $published ? null : false;
+    }
+
+    public function setDataListView(?array $data): void
+    {
+        $this->data = \is_array($data['_data']) ? $this->getDataAsJsonElement($data['_data']) : $data['_data'];
+    }
+
+    private function getDataAsJsonElement(array $dataElement): string
+    {
+        return (new JsonEncoder())->encode($dataElement, 'json');
     }
 }

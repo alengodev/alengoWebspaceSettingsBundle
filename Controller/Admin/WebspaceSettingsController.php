@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin;
 
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Api\WebspaceSettings as WebspaceSettingsApi;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsCreatedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsDeletedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsUpdatedEvent;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Model\WebspaceSettings as WebspaceSettingsModel;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
@@ -64,7 +62,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         ]);
 
         try {
-            $webspaceSettingsForListView = $this->generateApiWebspaceSettingsEntityCollection($query['result']);
+            $webspaceSettingsForListView = $this->generateWebspaceSettingsEntityCollection($query['result']);
         } catch (\JsonException $e) {
             throw new NotFoundHttpException('Webspace settings not found', $e);
         }
@@ -96,8 +94,10 @@ class WebspaceSettingsController extends AbstractRestController implements Class
             throw new NotFoundHttpException('Webspace settings not found');
         }
 
-        $apiEntity = $this->generateApiWebspaceSettingsEntity($webspaceSettings);
-        $view = $this->generateViewContent($apiEntity);
+        $dataType = 'data' . \ucfirst((string) $webspaceSettings->getType());
+        $webspaceSettings->{$dataType} = $webspaceSettings->getData()['_data'] ?? [];
+
+        $view = $this->generateViewContentFromEntity($webspaceSettings);
 
         return $this->handleView($view);
     }
@@ -119,7 +119,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $formData = $request->request->all();
         $checkData = $this->mapDataByType($formData['type'], $formData);
 
-        if (null === $checkData[0] || '' === $checkData[0]) {
+        if (null === $checkData) {
             throw new NotFoundHttpException('No data provided for type ' . $formData['type']);
         }
 
@@ -157,7 +157,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         $formData = $request->request->all();
         $checkData = $this->mapDataByType($formData['type'], $formData);
 
-        if (null === $checkData[0] || '' === $checkData[0]) {
+        if (null === $checkData) {
             throw new NotFoundHttpException('No data provided for type ' . $formData['type']);
         }
 
@@ -232,22 +232,12 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
     private function mapDataByType($type, $data): array|null
     {
-        return match ($type) {
-            'string' => [$data['dataString'] ?? null],
-            'textArea' => [$data['dataTextArea'] ?? null],
-            'textEditor' => [$data['dataTextEditor'] ?? null],
-            'event' => [$data['dataEvent'] ?? null],
-            'media' => [$data['dataMedia'] ?? null],
-            'medias' => [$data['dataMedias'] ?? null],
-            'page' => [$data['dataPage'] ?? null],
-            'pages' => [$data['dataPages'] ?? null],
-            'contact' => [$data['dataContact'] ?? null],
-            'contacts' => [$data['dataContacts'] ?? null],
-            'organization' => [$data['dataAccount'] ?? null],
-            'organizations' => [$data['dataAccounts'] ?? null],
-            'blocks' => [$data['dataBlocks'] ?? null],
-            default => null,
-        };
+        $mapPropertyName = 'data' . \ucfirst((string) $type);
+        if (null === $data[$mapPropertyName]) {
+            return null;
+        }
+
+        return ['_data' => $data[$mapPropertyName]];
     }
 
     private function mapLocale($data): string
@@ -282,44 +272,28 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         return \lcfirst(\str_replace(' ', '', \ucwords(\trim((string) $string))));
     }
 
-    private function generateApiWebspaceSettingsEntityCollection(array $entities): array
+    private function generateWebspaceSettingsEntityCollection(array $entities): array
     {
         $apiEntities = [];
         foreach ($entities as $entity) {
             if (!$entity instanceof WebspaceSettings) {
                 throw new NotFoundHttpException('Webspace settings not found');
             }
+            $entity->setPublishedListView($entity->getPublished());
+            $entity->setDataListView($entity->getData());
 
-            $apiEntry = $this->handleView($this->generateViewContent($this->generateApiWebspaceSettingsEntity($entity)));
-            $apiArray = \json_decode((string) $apiEntry->getContent(), true, 512, \JSON_THROW_ON_ERROR);
-
-            $apiModel = new WebspaceSettingsModel();
-            $apiModel->setId($apiArray['id'] ?? null);
-            $apiModel->setTitle($apiArray['title'] ?? null);
-            $apiModel->setPublished(true === $apiArray['published'] ? null : false);
-            $apiModel->setType($apiArray['type'] ?? null);
-            $apiModel->setTypeKey($apiArray['typeKey'] ?? null);
-            $apiModel->setData($apiArray['dataListView'] ?? null);
-            $apiModel->setLocale($apiArray['locale'] ?? null);
-            $apiModel->setCreated(new \DateTimeImmutable($apiArray['created']) ?? null);
-            $apiModel->setChanged(new \DateTime($apiArray['changed']) ?? null);
-
-            $apiEntities[] = $apiModel;
+            $apiEntities[] = $entity;
         }
 
         return $apiEntities;
     }
 
-    private function generateApiWebspaceSettingsEntity(WebspaceSettings $entity): WebspaceSettingsApi
+    private function generateViewContentFromEntity(WebspaceSettings $entity): View
     {
-        return new WebspaceSettingsApi($entity);
-    }
-
-    private function generateViewContent(WebspaceSettingsApi $entity): View
-    {
+        $entity = $entity->toArray();
         $view = $this->view($entity);
+
         $context = new Context();
-        $context->setGroups(['fullWebspaceSettings']);
 
         return $view->setContext($context);
     }

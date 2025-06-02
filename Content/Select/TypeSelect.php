@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Content\Select;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -14,7 +16,7 @@ class TypeSelect
 
     public function getValues($locale): array
     {
-        if(count($this->typeSelect) === 0) {
+        if (0 === \count($this->typeSelect)) {
             return [
                 [
                     'name' => 'string',
@@ -28,7 +30,7 @@ class TypeSelect
         foreach ($this->typeSelect as $type) {
             $types[] = [
                 'name' => $type,
-                'title' => $this->translator->trans('alengo_webspace_settings.'.$type, [], 'admin', $locale),
+                'title' => $this->translator->trans('alengo_webspace_settings.' . $type, [], 'admin', $locale),
             ];
         }
 

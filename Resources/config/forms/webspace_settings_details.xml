@@ -87,15 +87,15 @@
             </meta>
         </property>
 
-        <property name="dataAccount" type="single_account_selection" visibleCondition="type == 'organization'">
+        <property name="dataAccount" type="single_account_selection" visibleCondition="type == 'account'">
             <meta>
-                <title>alengo_webspace_settings.organization_mandatory</title>
+                <title>alengo_webspace_settings.account_mandatory</title>
             </meta>
         </property>
 
-        <property name="dataAccounts" type="account_selection" visibleCondition="type == 'organizations'">
+        <property name="dataAccounts" type="account_selection" visibleCondition="type == 'accounts'">
             <meta>
-                <title>alengo_webspace_settings.organizations_mandatory</title>
+                <title>alengo_webspace_settings.accounts_mandatory</title>
             </meta>
         </property>
 
