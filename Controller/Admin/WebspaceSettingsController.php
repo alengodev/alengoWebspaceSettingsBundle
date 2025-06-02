@@ -34,6 +34,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         private readonly EntityManagerInterface $entityManager,
         private readonly RequestStack $requestStack,
         private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly array $typeSelect = [],
     ) {
         parent::__construct($viewHandler, $tokenStorage);
     }
@@ -233,7 +234,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     private function mapDataByType($type, $data): array|null
     {
         $mapPropertyName = 'data' . \ucfirst((string) $type);
-        if (null === $data[$mapPropertyName]) {
+        if (null === $data[$mapPropertyName] && !\in_array($type, $this->typeSelect, true)) {
             return null;
         }
 
