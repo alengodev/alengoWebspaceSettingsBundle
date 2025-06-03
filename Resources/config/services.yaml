@@ -53,3 +53,9 @@ services:
     alengo_webspace_settings.content.select.type_select:
         alias: Alengo\Bundle\AlengoWebspaceSettingsBundle\Content\Select\TypeSelect
         public: 'true'
+
+    Alengo\Bundle\AlengoWebspaceSettingsBundle\Command\DataJsonMigrationCommand:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+        tags:
+            - { name: 'console.command' }
