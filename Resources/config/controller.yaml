@@ -7,3 +7,4 @@ services:
             - '@doctrine.orm.default_entity_manager'
             - '@request_stack'
             - '@event_dispatcher'
+            - '%alengo_webspace_settings.type_select%'

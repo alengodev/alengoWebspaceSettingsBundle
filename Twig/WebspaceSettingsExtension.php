@@ -52,6 +52,6 @@ class WebspaceSettingsExtension extends AbstractExtension
             return false;
         }
 
-        return $webspaceSettings->getData()[0] ?? false;
+        return $webspaceSettings->getData()['_data'] ?? false;
     }
 }

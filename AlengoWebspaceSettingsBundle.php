@@ -21,4 +21,9 @@ class AlengoWebspaceSettingsBundle extends Bundle
     public function build(ContainerBuilder $container): void
     {
     }
+
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
 }
