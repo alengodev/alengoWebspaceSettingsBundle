@@ -32,7 +32,6 @@ Enable the bundle by adding it to the list of registered bundles in the `config/
 bin/console do:sch:up --force
 ```
 
-
 ### Configure the Bundle
 
 Set the following config in your routes_admin.yaml
@@ -69,7 +68,6 @@ alengo_webspace_settings:
         - 'textEditor'
 ```
 
-
 ### Twig Extension
 The bundle provides a Twig extension to render the webspace settings in your templates.
 You can use the `webspaceSettings` function to retrieve the settings for a specific webspace and typeKey.
@@ -90,3 +88,6 @@ The bundle dispatches the following events:
 
 Create an event listener in your project to listen to these events and perform any necessary actions when webspace settings are created or updated.
 It is recommended to use the settings type `Event`.
+
+### Upgrade
+Please read the [UPGRADE.md](UPGRADE.md) file for upgrade instructions.
