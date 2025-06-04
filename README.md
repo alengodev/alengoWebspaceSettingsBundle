@@ -63,6 +63,8 @@ alengo_webspace_settings:
         - 'accounts'
         - 'page'
         - 'pages'
+        - 'snippet'
+        - 'snippets'
         - 'string' # default type
         - 'textArea'
         - 'textEditor'

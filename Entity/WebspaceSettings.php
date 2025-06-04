@@ -37,7 +37,7 @@ class WebspaceSettings
     private ?string $typeKey = null;
 
     #[ORM\Column(type: Types::JSON)]
-    private array|string|null $data = [];
+    private array|int|string|null $data = [];
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $locale = null;
@@ -123,12 +123,12 @@ class WebspaceSettings
         $this->typeKey = $typeKey;
     }
 
-    public function getData(): array|string|null
+    public function getData(): array|int|string|null
     {
         return $this->data;
     }
 
-    public function setData(array|string|null $data): self
+    public function setData(array|int|string|null $data): self
     {
         $this->data = $data;
 

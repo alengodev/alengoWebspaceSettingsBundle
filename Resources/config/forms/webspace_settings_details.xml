@@ -111,6 +111,18 @@
             </meta>
         </property>
 
+        <property name="dataCategory" type="single_category_selection" visibleCondition="type == 'category'">
+            <meta>
+                <title>alengo_webspace_settings.category_mandatory</title>
+            </meta>
+        </property>
+
+        <property name="dataCategories" type="category_selection" visibleCondition="type == 'categories'">
+            <meta>
+                <title>alengo_webspace_settings.categories_mandatory</title>
+            </meta>
+        </property>
+
         <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks'">
             <meta>
                 <title>alengo_webspace_settings.blocks_mandatory</title>
