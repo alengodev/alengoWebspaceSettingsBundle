@@ -54,6 +54,8 @@ config/packages/alengo_webspace_settings.yaml
 alengo_webspace_settings:
     type_select:
         - 'blocks'
+        - 'category'
+        - 'categories'
         - 'contact'
         - 'contacts'
         - 'event'
