@@ -98,6 +98,18 @@
                 <title>alengo_webspace_settings.accounts_mandatory</title>
             </meta>
         </property>
+        
+        <property name="dataSnippet" type="single_snippet_selection" visibleCondition="type == 'snippet'">
+            <meta>
+                <title>alengo_webspace_settings.snippet_mandatory</title>
+            </meta>
+        </property>
+
+        <property name="dataSnippets" type="snippet_selection" visibleCondition="type == 'snippets'">
+            <meta>
+                <title>alengo_webspace_settings.snippets_mandatory</title>
+            </meta>
+        </property>
 
         <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks'">
             <meta>
