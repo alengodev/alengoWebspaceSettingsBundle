@@ -234,7 +234,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
     private function mapDataByType($type, $data): array|null
     {
         $mapPropertyName = 'data' . \ucfirst((string) $type);
-        if (null === $data[$mapPropertyName] && !\in_array($type, $this->typeSelect, true)) {
+        if (null === $data[$mapPropertyName] || !\in_array($type, $this->typeSelect, true)) {
             return null;
         }
 

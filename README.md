@@ -54,8 +54,14 @@ config/packages/alengo_webspace_settings.yaml
 alengo_webspace_settings:
     type_select:
         - 'blocks'
+        - 'category'
+        - 'categories'
+        - 'collection'
+        - 'collections'
         - 'contact'
         - 'contacts'
+        - 'date'
+        - 'dateTime'
         - 'event'
         - 'media'
         - 'medias'
@@ -63,7 +69,11 @@ alengo_webspace_settings:
         - 'accounts'
         - 'page'
         - 'pages'
+        - 'snippet'
+        - 'snippets'
         - 'string' # default type
+        - 'tags'
+        - 'time'
         - 'textArea'
         - 'textEditor'
 ```
