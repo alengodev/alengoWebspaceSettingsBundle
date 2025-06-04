@@ -60,6 +60,8 @@ alengo_webspace_settings:
         - 'collections'
         - 'contact'
         - 'contacts'
+        - 'date'
+        - 'dateTime'
         - 'event'
         - 'media'
         - 'medias'
@@ -70,6 +72,8 @@ alengo_webspace_settings:
         - 'snippet'
         - 'snippets'
         - 'string' # default type
+        - 'tags'
+        - 'time'
         - 'textArea'
         - 'textEditor'
 ```

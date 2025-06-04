@@ -135,6 +135,30 @@
             </meta>
         </property>
 
+        <property name="dataDate" type="date" visibleCondition="type == 'date'">
+            <meta>
+                <title>alengo_webspace_settings.date_mandatory</title>
+            </meta>
+        </property>
+
+        <property name="dataTime" type="time" visibleCondition="type == 'time'">
+            <meta>
+                <title>alengo_webspace_settings.time_mandatory</title>
+            </meta>
+        </property>
+
+        <property name="dataDateTime" type="datetime" visibleCondition="type == 'dateTime'">
+            <meta>
+                <title>alengo_webspace_settings.dateTime_mandatory</title>
+            </meta>
+        </property>
+        
+        <property name="dataTags" type="tag_selection" visibleCondition="type == 'tags'">
+            <meta>
+                <title>alengo_webspace_settings.tags_mandatory</title>
+            </meta>
+        </property>
+
         <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks'">
             <meta>
                 <title>alengo_webspace_settings.blocks_mandatory</title>
