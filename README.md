@@ -56,6 +56,8 @@ alengo_webspace_settings:
         - 'blocks'
         - 'category'
         - 'categories'
+        - 'collection'
+        - 'collections'
         - 'contact'
         - 'contacts'
         - 'event'

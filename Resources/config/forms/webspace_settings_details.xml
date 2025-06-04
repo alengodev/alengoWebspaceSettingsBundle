@@ -123,6 +123,18 @@
             </meta>
         </property>
 
+        <property name="dataCollection" type="single_collection_selection" visibleCondition="type == 'collection'">
+            <meta>
+                <title>alengo_webspace_settings.collection_mandatory</title>
+            </meta>
+        </property>
+
+        <property name="dataCollections" type="collection_selection" visibleCondition="type == 'collections'">
+            <meta>
+                <title>alengo_webspace_settings.collections_mandatory</title>
+            </meta>
+        </property>
+
         <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks'">
             <meta>
                 <title>alengo_webspace_settings.blocks_mandatory</title>
