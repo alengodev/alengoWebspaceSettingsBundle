@@ -1,0 +1,22 @@
+{
+    "bundles": {
+        "Alengo\\Bundle\\AlengoWebspaceSettingsBundle": ["all"]
+    },
+    "aliases": ["alengo/alengo-webspace-settings-bundle"],
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/"
+    },
+    "copy-from-package": {
+        "Resources/app/config/packages/alengo_webspace_settings.yaml": "%CONFIG_DIR%/packages/alengo_webspace_settings.yaml",
+        "Resources/app/config/templates/settings/webspace_settings_blocks.xml": "%CONFIG_DIR%/templates/settings/webspace_settings_blocks.xml"
+    },
+    "post-install-output": [
+        "",
+        "🎉 AlengoWebspaceSettingsBundle is installed!",
+        "👉 Configure your types in:",
+        "   config/packages/alengo_webspace_settings.yaml",
+        "👉 Configure your blocks if needed in:",
+        "   config/templates/settings/webspace_settings_blocks.xml",
+        ""
+    ]
+}
