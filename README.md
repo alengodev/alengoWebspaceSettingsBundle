@@ -53,7 +53,7 @@ config/packages/alengo_webspace_settings.yaml
 ```yaml
 alengo_webspace_settings:
     type_select:
-        - 'blocks'
+        #- 'blocks' # deactivated by default
         - 'category'
         - 'categories'
         - 'collection'
@@ -89,6 +89,13 @@ with localization
 
 ```twig
 {{ webspaceSettings('metaTitleFallBack', app.request.locale) }}
+```
+
+### Blocks
+The bundle supports blocks for webspace settings. Copy the [webspace_settings_blocks.xml](https://github.com/alengodev/alengoWebspaceSettingsBundle/blob/main/Resources/app/config/templates/settings/webspace_settings_blocks.xml) in your project to the following path:
+
+```
+config/templates/settings/webspace_settings_blocks.xml
 ```
 
 ### Events

@@ -160,7 +160,7 @@
             </meta>
         </property>
 
-        <xi:include href="../../../../../../config/settings/webspace_settings_blocks.xml"
+        <xi:include href="../../../../../../config/templates/settings/webspace_settings_blocks.xml"
                     xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
                     xpointer(/sulu:properties/sulu:block)"/>
 
