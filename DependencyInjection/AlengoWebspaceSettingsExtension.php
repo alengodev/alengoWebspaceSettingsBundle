@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\DependencyInjection;
 
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Form\FormXmlLoader;
 use Sulu\Bundle\PersistenceBundle\DependencyInjection\PersistenceExtensionTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -75,6 +76,9 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
         $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $yamlLoader->load('services.yaml');
         $yamlLoader->load('controller.yaml');
+
+        $loader = new FormXmlLoader(new FileLocator(__DIR__ . '/../Resources/config/forms'), $container->getParameter('kernel.project_dir'));
+        $dom = $loader->load('webspace_settings_details.xml');
 
         $container->setParameter('alengo_webspace_settings.type_select', $config['type_select']);
     }
