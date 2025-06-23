@@ -160,9 +160,9 @@
             </meta>
         </property>
 
-        <xi:include href="../../../../config/forms/webspace_settings_blocks.xml"
+        <xi:include href="../../../../../../config/settings/webspace_settings_blocks.xml"
                     xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
-                        xpointer(/sulu:form/sulu:properties/sulu:block)"/>
+                    xpointer(/sulu:properties/sulu:block)"/>
 
         <property name="dataEvent" type="text_line" visibleCondition="type == 'event'" disabledCondition="!('ROLE_SULU_ADMIN' in __user.roles)" colspan="10">
             <meta>

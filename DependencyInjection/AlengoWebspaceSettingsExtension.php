@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\DependencyInjection;
 
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Form\FormXmlLoader;
 use Sulu\Bundle\PersistenceBundle\DependencyInjection\PersistenceExtensionTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
