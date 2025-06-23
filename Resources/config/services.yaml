@@ -59,3 +59,7 @@ services:
             - '@doctrine.orm.default_entity_manager'
         tags:
             - { name: 'console.command' }
+
+    Alengo\Bundle\AlengoWebspaceSettingsBundle\Command\CopyConfigCommand:
+        tags:
+            - { name: 'console.command' }
