@@ -47,15 +47,6 @@
         "symfony/monolog-bundle": "^3.1"
     },
     "scripts": {
-        "auto-scripts": {
-            "webspace:settings:copy-config": "symfony-cmd"
-        },
-        "post-install-cmd": [
-            "@auto-scripts"
-        ],
-        "post-update-cmd": [
-            "@auto-scripts"
-        ],
         "phpstan": "@php vendor/bin/phpstan analyze"
     },
     "autoload": {
