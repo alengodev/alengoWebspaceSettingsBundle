@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <form xmlns="http://schemas.sulu.io/template/template"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
       xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
 >
     <key>webspace_settings_details</key>
@@ -98,7 +99,7 @@
                 <title>alengo_webspace_settings.accounts_mandatory</title>
             </meta>
         </property>
-        
+
         <property name="dataSnippet" type="single_snippet_selection" visibleCondition="type == 'snippet'">
             <meta>
                 <title>alengo_webspace_settings.snippet_mandatory</title>
@@ -152,54 +153,16 @@
                 <title>alengo_webspace_settings.dateTime_mandatory</title>
             </meta>
         </property>
-        
+
         <property name="dataTags" type="tag_selection" visibleCondition="type == 'tags'">
             <meta>
                 <title>alengo_webspace_settings.tags_mandatory</title>
             </meta>
         </property>
 
-        <block name="dataBlocks" default-type="textEditor" minOccurs="0" visibleCondition="type == 'blocks'">
-            <meta>
-                <title>alengo_webspace_settings.blocks_mandatory</title>
-            </meta>
-
-            <types>
-                <type name="singleMediaSelection">
-                    <meta>
-                        <title>alengo_webspace_settings.media</title>
-                    </meta>
-
-                    <properties>
-                        <property name="singleMediaSelection" type="single_media_selection">
-                            <tag name="sulu.block_preview" priority="512"/>
-                        </property>
-                    </properties>
-                </type>
-                <type name="mediaSelection">
-                    <meta>
-                        <title>alengo_webspace_settings.medias</title>
-                    </meta>
-
-                    <properties>
-                        <property name="mediaSelection" type="media_selection">
-                            <tag name="sulu.block_preview" priority="512"/>
-                        </property>
-                    </properties>
-                </type>
-                <type name="textEditor">
-                    <meta>
-                        <title>alengo_webspace_settings.textEditor</title>
-                    </meta>
-
-                    <properties>
-                        <property name="textEditor" type="text_editor">
-                            <tag name="sulu.block_preview" priority="1024"/>
-                        </property>
-                    </properties>
-                </type>
-            </types>
-        </block>
+        <xi:include href="webspace_settings_blocks.xml"
+                    xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:form/sulu:properties/sulu:block)"/>
 
         <property name="dataEvent" type="text_line" visibleCondition="type == 'event'" disabledCondition="!('ROLE_SULU_ADMIN' in __user.roles)" colspan="10">
             <meta>
