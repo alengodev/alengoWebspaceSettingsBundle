@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^8.2",
+        "jackalope/jackalope-doctrine-dbal": "^1.10 || ^2.0",
         "sulu/sulu": "^2.6",
         "symfony/config": "^7.2",
         "symfony/dependency-injection": "^7.2",
@@ -30,7 +31,6 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.9",
         "handcraftedinthealps/zendsearch": "^2.0",
-        "jackalope/jackalope-doctrine-dbal": "^1.10 || ^2.0",
         "phpstan/extension-installer": "^1.2",
         "phpstan/phpstan": "^1.4",
         "phpstan/phpstan-doctrine": "^1.2",
