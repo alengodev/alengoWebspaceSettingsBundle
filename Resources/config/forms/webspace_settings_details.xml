@@ -160,9 +160,14 @@
             </meta>
         </property>
 
-        <xi:include href="../../../../../../config/templates/settings/webspace_settings_blocks.xml"
-                    xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
-                    xpointer(/sulu:properties/sulu:block)"/>
+        <block name="dataBlocks" visibleCondition="type == 'blocks'">
+            <meta>
+                <title>alengo_webspace_settings.blocks_mandatory</title>
+            </meta>
+            <xi:include href="../../../../../../config/templates/settings/webspace_settings_blocks.xml"
+                        xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                        xpointer(/sulu:properties/sulu:block/sulu:types)"/>
+        </block>
 
         <property name="dataEvent" type="text_line" visibleCondition="type == 'event'" disabledCondition="!('ROLE_SULU_ADMIN' in __user.roles)" colspan="10">
             <meta>

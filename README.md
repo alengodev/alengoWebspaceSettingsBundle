@@ -43,6 +43,8 @@ alengo_webspace_settings_api:
     prefix: /admin/api
     name_prefix: alengo_webspace_settings.
  ```
+Make sure you've set the correct permissions in the Sulu backend for this bundle!
+`Settings > User Roles`
 
 ### Type Selection
 
@@ -104,6 +106,7 @@ or execute the following command to copy it automatically:
 ```bash
 bin/console webspace:settings:copy-config
 ```
+Adjust the blocks as needed in your project.
 
 ### Events
 The bundle dispatches the following events:
