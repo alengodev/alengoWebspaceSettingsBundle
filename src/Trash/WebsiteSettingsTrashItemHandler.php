@@ -14,14 +14,14 @@ use Sulu\Bundle\TrashBundle\Application\TrashItemHandler\StoreTrashItemHandlerIn
 use Sulu\Bundle\TrashBundle\Domain\Model\TrashItemInterface;
 use Sulu\Bundle\TrashBundle\Domain\Repository\TrashItemRepositoryInterface;
 
-final class WebsiteSettingsTrashItemHandler implements
+final readonly class WebsiteSettingsTrashItemHandler implements
     StoreTrashItemHandlerInterface,
     RestoreTrashItemHandlerInterface,
     RestoreConfigurationProviderInterface
 {
     public function __construct(
-        private readonly TrashItemRepositoryInterface $trashItemRepository,
-        private readonly EntityManagerInterface $entityManager,
+        private TrashItemRepositoryInterface $trashItemRepository,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 

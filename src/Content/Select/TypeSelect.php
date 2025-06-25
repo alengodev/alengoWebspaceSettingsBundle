@@ -16,7 +16,7 @@ class TypeSelect
 
     public function getValues($locale): array
     {
-        if (0 === \count($this->typeSelect)) {
+        if ([] === $this->typeSelect) {
             return [
                 [
                     'name' => 'string',

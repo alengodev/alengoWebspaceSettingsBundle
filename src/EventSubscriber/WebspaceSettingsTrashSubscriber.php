@@ -18,7 +18,7 @@ class WebspaceSettingsTrashSubscriber implements EventSubscriberInterface
     private bool $hasPendingTrashItem = false;
 
     public function __construct(
-        private TrashManagerInterface $trashManager,
+        private readonly TrashManagerInterface $trashManager,
         private readonly EntityManagerInterface $entityManager,
     ) {
     }
