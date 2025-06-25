@@ -40,12 +40,12 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
                 [
                     'lists' => [
                         'directories' => [
-                            __DIR__ . '/../Resources/config/lists',
+                            __DIR__ . '/../../config/lists',
                         ],
                     ],
                     'forms' => [
                         'directories' => [
-                            __DIR__ . '/../Resources/config/forms',
+                            __DIR__ . '/../../config/forms',
                         ],
                     ],
                     'resources' => [
@@ -62,7 +62,7 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
 
         $container->loadFromExtension('framework', [
             'default_locale' => 'en',
-            'translator' => ['paths' => [__DIR__ . '/../Resources/config/translations/']],
+            'translator' => ['paths' => [__DIR__ . '/../../translations/']],
             // ...
         ]);
     }
@@ -72,7 +72,7 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $yamlLoader->load('services.yaml');
         $yamlLoader->load('controller.yaml');
 

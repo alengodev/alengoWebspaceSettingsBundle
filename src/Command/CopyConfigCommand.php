@@ -22,7 +22,7 @@ class CopyConfigCommand extends Command
         ];
 
         foreach ($files as $file) {
-            $source = __DIR__ . '/../Resources/app/' . $file;
+            $source = __DIR__ . '/../../config/app/' . $file;
             $target = $projectDir . '/' . $file;
 
             if (!$filesystem->exists($target)) {

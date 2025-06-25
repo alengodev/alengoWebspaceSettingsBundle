@@ -164,7 +164,7 @@
             <meta>
                 <title>alengo_webspace_settings.blocks_mandatory</title>
             </meta>
-            <xi:include href="../../../../../../../config/templates/settings/webspace_settings_blocks.xml"
+            <xi:include href="../../../../../../config/templates/settings/webspace_settings_blocks.xml"
                         xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
                         xpointer(/sulu:properties/sulu:block/sulu:types)"/>
         </block>
