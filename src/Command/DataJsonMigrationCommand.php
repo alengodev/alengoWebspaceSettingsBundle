@@ -52,7 +52,7 @@ class DataJsonMigrationCommand extends Command
             return \is_array($data) && !isset($data['_data']);
         });
 
-        if (empty($filteredEntities)) {
+        if ([] === $filteredEntities) {
             $io->success('No entities found that need migration.');
             $this->release();
 

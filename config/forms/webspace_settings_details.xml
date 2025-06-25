@@ -160,11 +160,21 @@
             </meta>
         </property>
 
+        <property name="dataCheckbox" type="checkbox" visibleCondition="type == 'checkbox'">
+            <meta>
+                <title>alengo_webspace_settings.checkbox_mandatory</title>
+            </meta>
+            <params>
+                <param name="type" value="toggler"/>
+                <param name="default_value" value="true"/>
+            </params>
+        </property>
+
         <block name="dataBlocks" visibleCondition="type == 'blocks'">
             <meta>
                 <title>alengo_webspace_settings.blocks_mandatory</title>
             </meta>
-            <xi:include href="../../../../../../config/templates/settings/webspace_settings_blocks.xml"
+            <xi:include href="../../../../../config/templates/settings/webspace_settings_blocks.xml"
                         xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
                         xpointer(/sulu:properties/sulu:block/sulu:types)"/>
         </block>

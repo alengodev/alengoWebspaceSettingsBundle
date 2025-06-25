@@ -20,11 +20,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * This is the class that loads and manages your bundle configuration.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
 class AlengoWebspaceSettingsExtension extends Extension implements PrependExtensionInterface
 {
     use PersistenceExtensionTrait;
@@ -40,12 +35,12 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
                 [
                     'lists' => [
                         'directories' => [
-                            __DIR__ . '/../Resources/config/lists',
+                            __DIR__ . '/../../config/lists',
                         ],
                     ],
                     'forms' => [
                         'directories' => [
-                            __DIR__ . '/../Resources/config/forms',
+                            __DIR__ . '/../../config/forms',
                         ],
                     ],
                     'resources' => [
@@ -62,7 +57,7 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
 
         $container->loadFromExtension('framework', [
             'default_locale' => 'en',
-            'translator' => ['paths' => [__DIR__ . '/../Resources/config/translations/']],
+            'translator' => ['paths' => [__DIR__ . '/../../translations/']],
             // ...
         ]);
     }
@@ -72,7 +67,7 @@ class AlengoWebspaceSettingsExtension extends Extension implements PrependExtens
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $yamlLoader->load('services.yaml');
         $yamlLoader->load('controller.yaml');
 

@@ -37,7 +37,7 @@ class WebspaceSettings
     private ?string $typeKey = null;
 
     #[ORM\Column(type: Types::JSON)]
-    private array|int|string|null $data = [];
+    private array|int|string|bool|null $data = [];
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $locale = null;
@@ -123,12 +123,12 @@ class WebspaceSettings
         $this->typeKey = $typeKey;
     }
 
-    public function getData(): array|int|string|null
+    public function getData(): array|int|string|bool|null
     {
         return $this->data;
     }
 
-    public function setData(array|int|string|null $data): self
+    public function setData(array|int|string|bool|null $data): self
     {
         $this->data = $data;
 
@@ -237,7 +237,13 @@ class WebspaceSettings
 
     public function setDataListView(?array $data): void
     {
-        $this->data = \is_array($data['_data']) ? $this->getDataAsJsonElement($data['_data']) : $data['_data'];
+        if (\is_array($data['_data'])) {
+            $this->data = $this->getDataAsJsonElement($data['_data']);
+        } elseif (\is_bool($data['_data'])) {
+            $this->data = $data['_data'] ? 'true' : 'false';
+        } else {
+            $this->data = $data['_data'];
+        }
     }
 
     private function getDataAsJsonElement(array $dataElement): string

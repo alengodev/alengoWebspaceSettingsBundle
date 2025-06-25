@@ -2,7 +2,7 @@
 Sometimes you need to store values that are not directly related to a specific page or content type, but rather to the entire webspace.
 This Sulu bundle provides a way to manage such settings in a structured manner.
 
-![Screenshot of Sulu AlengoWebspaceSettingsBundle](sulu.png)
+![Screenshot of Sulu AlengoWebspaceSettingsBundle](docs/img/sulu.png)
 
 ### Requirements
 

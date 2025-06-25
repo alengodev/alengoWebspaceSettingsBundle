@@ -54,6 +54,8 @@
         "dateTime_mandatory": "Date/Time *",
         "tags": "Tags",
         "tags_mandatory": "Tags *",
+        "checkbox": "Checkbox",
+        "checkbox_mandatory": "Checkbox *",
         "blocks": "Block",
         "blocks_mandatory": "Block *",
         "execute": "execute",
