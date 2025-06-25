@@ -13,17 +13,14 @@ declare(strict_types=1);
 
 namespace Alengo\Bundle\AlengoWebspaceSettingsBundle;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\DependencyInjection\AlengoWebspaceSettingsExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-class AlengoWebspaceSettingsBundle extends Bundle
+class AlengoWebspaceSettingsBundle extends AbstractBundle
 {
-    public function build(ContainerBuilder $container): void
+    public function getContainerExtension(): ?ExtensionInterface
     {
-    }
-
-    public function getPath(): string
-    {
-        return \dirname(__DIR__);
+        return new AlengoWebspaceSettingsExtension();
     }
 }
