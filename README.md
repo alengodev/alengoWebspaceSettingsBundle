@@ -58,6 +58,7 @@ alengo_webspace_settings:
         - 'blocks'
         - 'category'
         - 'categories'
+        - 'checkbox'
         - 'collection'
         - 'collections'
         - 'contact'
