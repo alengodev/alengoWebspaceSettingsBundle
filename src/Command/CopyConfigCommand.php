@@ -27,7 +27,7 @@ class CopyConfigCommand extends Command
                 'source' => __DIR__ . '/../../config/app/webspace_settings_blocks.xml',
                 'target' => $projectDir . '/config/templates/settings/webspace_settings_blocks.xml',
             ],
-        ];;
+        ];
 
         foreach ($files as $file) {
             if (!$filesystem->exists($file['target'])) {
