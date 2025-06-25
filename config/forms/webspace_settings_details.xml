@@ -164,6 +164,10 @@
             <meta>
                 <title>alengo_webspace_settings.checkbox_mandatory</title>
             </meta>
+            <params>
+                <param name="type" value="toggler"/>
+                <param name="default_value" value="true"/>
+            </params>
         </property>
 
         <block name="dataBlocks" visibleCondition="type == 'blocks'">
