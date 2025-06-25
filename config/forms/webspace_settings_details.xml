@@ -160,6 +160,12 @@
             </meta>
         </property>
 
+        <property name="dataCheckbox" type="checkbox" visibleCondition="type == 'checkbox'">
+            <meta>
+                <title>alengo_webspace_settings.checkbox_mandatory</title>
+            </meta>
+        </property>
+
         <block name="dataBlocks" visibleCondition="type == 'blocks'">
             <meta>
                 <title>alengo_webspace_settings.blocks_mandatory</title>
