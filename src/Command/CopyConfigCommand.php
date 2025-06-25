@@ -19,19 +19,22 @@ class CopyConfigCommand extends Command
         $projectDir = \getcwd();
 
         $files = [
-            'config/packages/alengo_webspace_settings.yaml',
-            'config/templates/settings/webspace_settings_blocks.xml',
-        ];
+            [
+                'source' => __DIR__ . '/../../config/app/alengo_webspace_settings.yaml',
+                'target' => $projectDir . '/config/packages/alengo_webspace_settings.yaml',
+            ],
+            [
+                'source' => __DIR__ . '/../../config/app/webspace_settings_blocks.xml',
+                'target' => $projectDir . '/config/templates/settings/webspace_settings_blocks.xml',
+            ],
+        ];;
 
         foreach ($files as $file) {
-            $source = __DIR__ . '/../../config/app/' . $file;
-            $target = $projectDir . '/' . $file;
-
-            if (!$filesystem->exists($target)) {
-                $filesystem->copy($source, $target);
-                $output->writeln(\sprintf('<info>Copied config %s</info>', $file));
+            if (!$filesystem->exists($file['target'])) {
+                $filesystem->copy($file['source'], $file['target']);
+                $output->writeln(\sprintf('<info>Copied config %s</info>', $file['target']));
             } else {
-                $output->writeln(\sprintf('<comment>Config file %s already exists.</comment>', $file));
+                $output->writeln(\sprintf('<comment>Config file %s already exists.</comment>', $file['target']));
             }
         }
 
