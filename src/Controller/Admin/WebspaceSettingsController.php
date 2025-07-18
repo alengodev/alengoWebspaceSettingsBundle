@@ -97,6 +97,7 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         $dataType = 'data' . \ucfirst((string) $webspaceSettings->getType());
         $webspaceSettings->{$dataType} = $webspaceSettings->getData()['_data'] ?? [];
+        $webspaceSettings->{'localeActivated'} = (bool) $webspaceSettings->getLocale();
 
         $view = $this->generateViewContentFromEntity($webspaceSettings);
 
