@@ -195,7 +195,7 @@
             </params>
         </property>
 
-        <property name="localeActivated" type="checkbox" colspan="4" visibleCondition="type == 'string' or type == 'blocks'">
+        <property name="localeActivated" type="checkbox" colspan="4" visibleCondition="type in ['blocks', 'string', 'textArea', 'textEditor']">
             <params>
                 <param name="type" value="toggler"/>
                 <param name="label">
