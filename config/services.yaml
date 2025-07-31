@@ -18,8 +18,7 @@ services:
     Alengo\Bundle\AlengoWebspaceSettingsBundle\Twig\WebspaceSettingsExtension:
         public: 'true'
         arguments:
-            - '@request_stack'
-            - '@alengo_webspace_settings.repository.webspace_settings'
+            - '@alengo_webspace_settings.service.webspace_settings'
         tags:
             - { name: twig.extension }
 
@@ -63,3 +62,12 @@ services:
     Alengo\Bundle\AlengoWebspaceSettingsBundle\Command\CopyConfigCommand:
         tags:
             - { name: 'console.command' }
+
+    Alengo\Bundle\AlengoWebspaceSettingsBundle\Service\WebspaceSettingsService:
+        arguments:
+            - '@request_stack'
+            - '@alengo_webspace_settings.repository.webspace_settings'
+        public: 'true'
+
+    alengo_webspace_settings.service.webspace_settings:
+        alias: Alengo\Bundle\AlengoWebspaceSettingsBundle\Service\WebspaceSettingsService
