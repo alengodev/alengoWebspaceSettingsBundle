@@ -6,6 +6,7 @@ This Sulu bundle provides a way to manage such settings in a structured manner.
 
 ### Requirements
 
+* Sulu 3.x
 * PHP 8.2
 * Symfony >=7.2
 
