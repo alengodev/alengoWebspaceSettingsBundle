@@ -35,14 +35,6 @@ services:
             - { name: 'sulu_trash.restore_trash_item_handler' }
             - { name: 'sulu_trash.restore_configuration_provider' }
 
-    alengo_webspace_settings.webspace_settings_trash_subscriber:
-        class: Alengo\Bundle\AlengoWebspaceSettingsBundle\EventSubscriber\WebspaceSettingsTrashSubscriber
-        arguments:
-            - '@sulu_trash.trash_manager'
-            - '@doctrine.orm.entity_manager'
-        tags:
-            - { name: 'kernel.event_subscriber' }
-
     Alengo\Bundle\AlengoWebspaceSettingsBundle\Content\Select\TypeSelect:
         arguments:
             - '@Symfony\Contracts\Translation\TranslatorInterface'
