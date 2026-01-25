@@ -62,7 +62,7 @@ class WebspaceSettingsRepository extends ServiceEntityRepository
 
         if (null !== $param['limit']) {
             $query->setFirstResult(($param['page'] - 1) * $param['limit']);
-            $query->setMaxResults($param['limit']);
+            $query->setMaxResults((int) $param['limit']);
         }
 
         $result = $query->getQuery()->getResult();
