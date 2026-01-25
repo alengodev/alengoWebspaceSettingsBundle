@@ -6,17 +6,15 @@ namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin;
 
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsCreatedEvent;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsDeletedEvent;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Event\WebspaceSettingsUpdatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\CreatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\DeletedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\UpdatedEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 use Sulu\Component\Rest\AbstractRestController;
-use Sulu\Component\Rest\ListBuilder\CollectionRepresentation;
-use Sulu\Component\Rest\ListBuilder\ListRepresentation;
+use Sulu\Component\Rest\ListBuilder\PaginatedRepresentation;
 use Sulu\Component\Security\SecuredControllerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +24,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class WebspaceSettingsController extends AbstractRestController implements ClassResourceInterface, SecuredControllerInterface
+class WebspaceSettingsController extends AbstractRestController implements SecuredControllerInterface
 {
     public function __construct(
         ViewHandlerInterface $viewHandler,
@@ -67,16 +65,13 @@ class WebspaceSettingsController extends AbstractRestController implements Class
         } catch (\JsonException $e) {
             throw new NotFoundHttpException('Webspace settings not found', $e);
         }
-        // $list = new CollectionRepresentation($webspaceSettingsForListView, 'webspace_settings');
 
-        $list = new ListRepresentation(
+        $list = new PaginatedRepresentation(
             $webspaceSettingsForListView,
             WebspaceSettings::RESOURCE_KEY,
-            'cget_webspace-settings',
-            $request->query->all(),
-            $query['page'],
-            $query['limit'],
-            $query['total'],
+            (int) $query['page'],
+            (int) $query['limit'],
+            (int) $query['total'],
         );
 
         return $this->handleView($this->view($list, 200));
@@ -139,8 +134,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         // Event dispatching
         $this->eventDispatcher->dispatch(
-            new WebspaceSettingsCreatedEvent($webspaceSettings),
-            WebspaceSettingsCreatedEvent::class,
+            new CreatedEvent($webspaceSettings),
+            CreatedEvent::class,
         );
 
         return $this->handleView($this->view($webspaceSettings, 201));
@@ -180,8 +175,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         // Event dispatching
         $this->eventDispatcher->dispatch(
-            new WebspaceSettingsUpdatedEvent($webspaceSettings),
-            WebspaceSettingsUpdatedEvent::class,
+            new UpdatedEvent($webspaceSettings),
+            UpdatedEvent::class,
         );
 
         return $this->handleView($this->view($webspaceSettings, 200));
@@ -209,8 +204,8 @@ class WebspaceSettingsController extends AbstractRestController implements Class
 
         // Event dispatching
         $this->eventDispatcher->dispatch(
-            new WebspaceSettingsDeletedEvent($webspaceSettings),
-            WebspaceSettingsDeletedEvent::class,
+            new DeletedEvent($webspaceSettings),
+            DeletedEvent::class,
         );
 
         $this->entityManager->remove($webspaceSettings);
