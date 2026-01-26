@@ -70,6 +70,7 @@ final readonly class WebsiteSettingsTrashItemHandler implements
         $webspaceSettings->setType($data['type']);
         $webspaceSettings->setTypeKey($data['typeKey'] . '__restored');
         $webspaceSettings->setData($data['data']);
+        $webspaceSettings->setShowOptions($data['showOptions']);
         $webspaceSettings->setLocale($data['locale']);
         $webspaceSettings->setExecute($data['execute']);
         $webspaceSettings->setExecuteLog($data['executeLog']);

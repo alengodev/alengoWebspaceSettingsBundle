@@ -39,6 +39,9 @@ class WebspaceSettings
     #[ORM\Column(type: Types::JSON)]
     private array|int|string|bool|null $data = [];
 
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
+    private ?bool $showOptions = false;
+
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $locale = null;
 
@@ -133,6 +136,16 @@ class WebspaceSettings
         $this->data = $data;
 
         return $this;
+    }
+
+    public function getShowOptions(): ?bool
+    {
+        return $this->showOptions;
+    }
+
+    public function setShowOptions(?bool $showOptions): void
+    {
+        $this->showOptions = $showOptions;
     }
 
     public function getLocale(): ?string

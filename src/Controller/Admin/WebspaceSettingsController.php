@@ -221,6 +221,7 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
         $entity->setTypeKey($this->generateTypeKey($data['title'], $data['typeKey'] ?? ''));
         $entity->setData($this->mapDataByType($data['type'], $data));
         $entity->setDescription($data['description']);
+        $entity->setShowOptions($data['showOptions']);
         $entity->setLocale($this->mapLocale($data));
         $entity->setExecute($this->mapExecuteByType($data['type'], $data));
         $entity->setPublished($data['published']);
