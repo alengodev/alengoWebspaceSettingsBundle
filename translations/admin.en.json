@@ -72,7 +72,10 @@
         },
         "description": {
             "webspace_settings": {
-                "created": "{userFullName} has created the webspace settings \"{resourceTitle}\""
+                "created": "{userFullName} has created the webspace settings \"{resourceTitle}\"",
+                "modified": "{userFullName} has modified the webspace settings \"{resourceTitle}\"",
+                "removed": "{userFullName} has removed the webspace settings \"{resourceTitle}\"",
+                "restored": "{userFullName} has restored the webspace settings \"{resourceTitle}\""
             }
         }
     }

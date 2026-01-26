@@ -72,7 +72,10 @@
         },
         "description": {
             "webspace_settings": {
-                "created": "{userFullName} has created the Book \"{resourceTitle}\""
+                "created": "{userFullName} hat die Webspace Einstellung \"{resourceTitle}\" erstellt",
+                "modified": "{userFullName} hat die Webspace Einstellung \"{resourceTitle}\" bearbeitet",
+                "removed": "{userFullName} hat die Webspace Einstellung \"{resourceTitle}\" gelöscht",
+                "restored": "{userFullName} hat die Webspace Einstellung \"{resourceTitle}\" wiederhergestellt"
             }
         }
     }
