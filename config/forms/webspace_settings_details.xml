@@ -195,71 +195,82 @@
             </params>
         </property>
 
-        <property name="localeActivated" type="checkbox" colspan="4" visibleCondition="type in ['blocks', 'string', 'textArea', 'textEditor']">
-            <params>
-                <param name="type" value="toggler"/>
-                <param name="label">
+        <section name="options">
+            <properties>
+                <property name="showOptions" type="checkbox">
+                    <params>
+                        <param name="description">
+                            <meta>
+                                <title>alengo_webspace_settings.show_options_info</title>
+                            </meta>
+                        </param>
+                        <param name="icon" value="su-cog" />
+                        <param name="label">
+                            <meta>
+                                <title>alengo_webspace_settings.show_options</title>
+                            </meta>
+                        </param>
+                        <param name="skin" value="heading" />
+                        <param name="type" value="toggler" />
+                    </params>
+                </property>
+
+                <property name="localeActivated" type="checkbox" colspan="4" visibleCondition="type in ['blocks', 'string', 'textArea', 'textEditor'] and showOptions == true">
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="label">
+                            <meta>
+                                <title>alengo_webspace_settings.localization</title>
+                            </meta>
+                        </param>
+                    </params>
+                </property>
+
+                <property name="locale" type="custom_urls_locale_select" colspan="8" visibleCondition="localeActivated == true and showOptions == true">
+                </property>
+
+                <property name="description" type="text_area" visibleCondition="showOptions == true">
                     <meta>
-                        <title>alengo_webspace_settings.localization</title>
+                        <title>sulu_admin.description</title>
                     </meta>
-                </param>
-            </params>
-        </property>
+                </property>
 
-        <property name="locale" type="custom_urls_locale_select" colspan="8" visibleCondition="localeActivated == true">
-        </property>
-
-        <property name="showOptions" type="checkbox">
-            <params>
-                <param name="type" value="toggler"/>
-                <param name="label">
+                <property name="executeLog" type="text_area" disabledCondition="true" visibleCondition="showOptions == true and type == 'event'">
                     <meta>
-                        <title>alengo_webspace_settings.show_options</title>
+                        <title>alengo_webspace_settings.execute_log</title>
                     </meta>
-                </param>
-            </params>
-        </property>
+                </property>
 
-        <property name="description" type="text_area" visibleCondition="showOptions == true">
-            <meta>
-                <title>sulu_admin.description</title>
-            </meta>
-        </property>
-
-        <property name="executeLog" type="text_area" disabledCondition="true" visibleCondition="showOptions == true and type == 'event'">
-            <meta>
-                <title>alengo_webspace_settings.execute_log</title>
-            </meta>
-        </property>
-
-        <property name="protected" type="checkbox" visibleCondition="showOptions == true">
-            <meta>
-                <info_text>alengo_webspace_settings.protected_info</info_text>
-            </meta>
-            <params>
-                <param name="label">
+                <property name="protected" type="checkbox" visibleCondition="showOptions == true">
                     <meta>
-                        <title>alengo_webspace_settings.protected</title>
+                        <info_text>alengo_webspace_settings.protected_info</info_text>
                     </meta>
-                </param>
-                <param name="default_value" value="false"/>
-                <param name="type" value="toggler" />
-            </params>
-        </property>
+                    <params>
+                        <param name="label">
+                            <meta>
+                                <title>alengo_webspace_settings.protected</title>
+                            </meta>
+                        </param>
+                        <param name="default_value" value="false"/>
+                        <param name="type" value="toggler" />
+                    </params>
+                </property>
 
-        <property name="published" type="checkbox" visibleCondition="showOptions == true">
-            <meta>
-                <info_text>alengo_webspace_settings.published_info</info_text>
-            </meta>
-            <params>
-                <param name="label">
+                <property name="published" type="checkbox" visibleCondition="showOptions == true">
                     <meta>
-                        <title>alengo_webspace_settings.published</title>
+                        <info_text>alengo_webspace_settings.published_info</info_text>
                     </meta>
-                </param>
-                <param name="default_value" value="true"/>
-                <param name="type" value="toggler" />
-            </params>
-        </property>
+                    <params>
+                        <param name="label">
+                            <meta>
+                                <title>alengo_webspace_settings.published</title>
+                            </meta>
+                        </param>
+                        <param name="default_value" value="true"/>
+                        <param name="type" value="toggler" />
+                    </params>
+                </property>
+            </properties>
+        </section>
     </properties>
 </form>
