@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Trash;
 
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\RestoredEvent as RestoredActivity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Doctrine\ORM\EntityManagerInterface;
+use Sulu\Bundle\ActivityBundle\Application\Collector\DomainEventCollectorInterface;
 use Sulu\Bundle\TrashBundle\Application\RestoreConfigurationProvider\RestoreConfiguration;
 use Sulu\Bundle\TrashBundle\Application\RestoreConfigurationProvider\RestoreConfigurationProviderInterface;
 use Sulu\Bundle\TrashBundle\Application\TrashItemHandler\RestoreTrashItemHandlerInterface;
@@ -22,6 +24,7 @@ final readonly class WebsiteSettingsTrashItemHandler implements
     public function __construct(
         private TrashItemRepositoryInterface $trashItemRepository,
         private EntityManagerInterface $entityManager,
+        private DomainEventCollectorInterface $domainEventCollector,
     ) {
     }
 
@@ -81,6 +84,8 @@ final readonly class WebsiteSettingsTrashItemHandler implements
         $webspaceSettings->setChanged(new \DateTime($data['changed']['date']));
         $webspaceSettings->setIdUsersCreator($data['idUsersCreator']);
         $webspaceSettings->setIdUsersChanger($data['idUsersChanger']);
+
+        $this->domainEventCollector->collect(new RestoredActivity($webspaceSettings));
 
         $this->entityManager->persist($webspaceSettings);
         $this->entityManager->flush();

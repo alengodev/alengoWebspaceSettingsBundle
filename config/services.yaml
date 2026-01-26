@@ -30,6 +30,7 @@ services:
         arguments:
             - '@sulu_trash.trash_item_repository'
             - '@doctrine.orm.entity_manager'
+            - '@sulu_activity.domain_event_collector'
         tags:
             - { name: 'sulu_trash.store_trash_item_handler' }
             - { name: 'sulu_trash.restore_trash_item_handler' }

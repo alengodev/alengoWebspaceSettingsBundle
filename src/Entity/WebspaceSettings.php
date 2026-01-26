@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 class WebspaceSettings
 {
     public const RESOURCE_KEY = 'webspace_settings';
+    public const SECURITY_CONTEXT = 'sulu.webspaces';
 
     #[ORM\Id()]
     #[ORM\GeneratedValue()]

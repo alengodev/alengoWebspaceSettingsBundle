@@ -69,6 +69,11 @@
     "sulu_activity": {
         "resource": {
             "webspace_settings": "Webspace Einstellung"
+        },
+        "description": {
+            "webspace_settings": {
+                "created": "{userFullName} has created the Book \"{resourceTitle}\""
+            }
         }
     }
 }

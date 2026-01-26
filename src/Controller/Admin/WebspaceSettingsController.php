@@ -6,6 +6,9 @@ namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin;
 
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\CreatedEvent as CreatedActivity;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\ModifiedEvent as ModifiedActivity;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\RemovedEvent as RemovedActivity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\CreatedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\DeletedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\UpdatedEvent;
@@ -13,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Sulu\Bundle\ActivityBundle\Application\Collector\DomainEventCollectorInterface;
 use Sulu\Bundle\TrashBundle\Application\TrashManager\TrashManagerInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\ListBuilder\PaginatedRepresentation;
@@ -34,6 +38,7 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
         private readonly RequestStack $requestStack,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TrashManagerInterface $trashManager,
+        private readonly DomainEventCollectorInterface $domainEventCollector,
         private readonly array $typeSelect = [],
     ) {
         parent::__construct($viewHandler, $tokenStorage);
@@ -131,6 +136,8 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
         $webspaceSettings->setIdUsersCreator($userId);
         $webspaceSettings->setIdUsersChanger($userId);
 
+        $this->domainEventCollector->collect(new CreatedActivity($webspaceSettings));
+
         $this->entityManager->persist($webspaceSettings);
         $this->entityManager->flush();
 
@@ -172,6 +179,8 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
         $webspaceSettings->setChanged(new \DateTime());
         $webspaceSettings->setIdUsersChanger($userId);
 
+        $this->domainEventCollector->collect(new ModifiedActivity($webspaceSettings));
+
         $this->mapDataToEntity($formData, $webspaceSettings);
         $this->entityManager->flush();
 
@@ -211,11 +220,19 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
         );
 
         $this->trashManager->store(WebspaceSettings::RESOURCE_KEY, $webspaceSettings);
+        $this->domainEventCollector->collect(new RemovedActivity($webspaceSettings));
 
         $this->entityManager->remove($webspaceSettings);
         $this->entityManager->flush();
 
         return $this->handleView($this->view(null, 204));
+    }
+
+    public function getSecurityContext(): string
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        return WebspaceSettingsAdmin::getWebspaceSettingsSecurityContext($request->query->get('webspace'));
     }
 
     private function mapDataToEntity(array $data, WebspaceSettings $entity): void
@@ -298,12 +315,5 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
         $context = new Context();
 
         return $view->setContext($context);
-    }
-
-    public function getSecurityContext(): string
-    {
-        $request = $this->requestStack->getCurrentRequest();
-
-        return WebspaceSettingsAdmin::getWebspaceSettingsSecurityContext($request->query->get('webspace'));
     }
 }

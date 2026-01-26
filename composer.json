@@ -29,6 +29,8 @@
     },
     "require-dev": {
         "jackalope/jackalope-doctrine-dbal": "^1.10 || ^2.0",
+        "php-cs-fixer/shim": "^3.93",
+        "rector/rector": "^2.3",
         "symfony/browser-kit": "^7.2",
         "symfony/console": "^7.2"
     },

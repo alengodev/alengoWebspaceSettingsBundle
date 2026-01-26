@@ -8,4 +8,5 @@ services:
             - '@request_stack'
             - '@event_dispatcher'
             - '@sulu_trash.trash_manager'
+            - '@sulu_activity.domain_event_collector'
             - '%alengo_webspace_settings.type_select%'
