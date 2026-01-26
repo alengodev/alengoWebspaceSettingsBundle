@@ -46,7 +46,7 @@ class DataJsonMigrationCommand extends Command
 
         $webspaceSettings = $this->entityManager->getRepository(WebspaceSettings::class)->findAll();
 
-        $filteredEntities = \array_filter($webspaceSettings, function ($entity) {
+        $filteredEntities = \array_filter($webspaceSettings, static function ($entity) {
             $data = $entity->getData();
 
             return \is_array($data) && !isset($data['_data']);

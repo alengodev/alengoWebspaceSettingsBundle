@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin;
 
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\CreatedEvent as CreatedActivity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\ModifiedEvent as ModifiedActivity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\RemovedEvent as RemovedActivity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\CreatedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\DeletedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\UpdatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
