@@ -34,6 +34,7 @@ final readonly class WebsiteSettingsTrashItemHandler implements
             'type' => $websiteSettings->getType(),
             'typeKey' => $websiteSettings->getTypeKey(),
             'data' => $websiteSettings->getData(),
+            'showOptions' => $websiteSettings->getShowOptions(),
             'locale' => $websiteSettings->getLocale(),
             'execute' => $websiteSettings->getExecute(),
             'executeLog' => $websiteSettings->getExecuteLog(),

@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Sulu\Bundle\TrashBundle\Application\TrashManager\TrashManagerInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\ListBuilder\PaginatedRepresentation;
 use Sulu\Component\Security\SecuredControllerInterface;
@@ -32,6 +33,7 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
         private readonly EntityManagerInterface $entityManager,
         private readonly RequestStack $requestStack,
         private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TrashManagerInterface $trashManager,
         private readonly array $typeSelect = [],
     ) {
         parent::__construct($viewHandler, $tokenStorage);
@@ -207,6 +209,8 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
             new DeletedEvent($webspaceSettings),
             DeletedEvent::class,
         );
+
+        $this->trashManager->store(WebspaceSettings::RESOURCE_KEY, $webspaceSettings);
 
         $this->entityManager->remove($webspaceSettings);
         $this->entityManager->flush();

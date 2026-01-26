@@ -7,4 +7,5 @@ services:
             - '@doctrine.orm.default_entity_manager'
             - '@request_stack'
             - '@event_dispatcher'
+            - '@sulu_trash.trash_manager'
             - '%alengo_webspace_settings.type_select%'
