@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings;
+namespace Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event;
 
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class DeletedEvent extends Event
+class WebspaceSettingsRemovedEvent extends Event
 {
     public function __construct(
         private readonly WebspaceSettings $webspaceSettings,

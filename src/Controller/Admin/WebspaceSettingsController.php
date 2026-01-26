@@ -8,9 +8,9 @@ use Alengo\Bundle\AlengoWebspaceSettingsBundle\Admin\WebspaceSettingsAdmin;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\CreatedEvent as CreatedActivity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\ModifiedEvent as ModifiedActivity;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\Activity\RemovedEvent as RemovedActivity;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\CreatedEvent;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\DeletedEvent;
-use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettings\UpdatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettingsCreatedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettingsModifiedEvent;
+use Alengo\Bundle\AlengoWebspaceSettingsBundle\Domain\Event\WebspaceSettingsRemovedEvent;
 use Alengo\Bundle\AlengoWebspaceSettingsBundle\Entity\WebspaceSettings;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
@@ -143,8 +143,8 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
 
         // Event dispatching
         $this->eventDispatcher->dispatch(
-            new CreatedEvent($webspaceSettings),
-            CreatedEvent::class,
+            new WebspaceSettingsCreatedEvent($webspaceSettings),
+            WebspaceSettingsCreatedEvent::class,
         );
 
         return $this->handleView($this->view($webspaceSettings, 201));
@@ -186,8 +186,8 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
 
         // Event dispatching
         $this->eventDispatcher->dispatch(
-            new UpdatedEvent($webspaceSettings),
-            UpdatedEvent::class,
+            new WebspaceSettingsModifiedEvent($webspaceSettings),
+            WebspaceSettingsModifiedEvent::class,
         );
 
         return $this->handleView($this->view($webspaceSettings, 200));
@@ -215,8 +215,8 @@ class WebspaceSettingsController extends AbstractRestController implements Secur
 
         // Event dispatching
         $this->eventDispatcher->dispatch(
-            new DeletedEvent($webspaceSettings),
-            DeletedEvent::class,
+            new WebspaceSettingsRemovedEvent($webspaceSettings),
+            WebspaceSettingsRemovedEvent::class,
         );
 
         $this->trashManager->store(WebspaceSettings::RESOURCE_KEY, $webspaceSettings);

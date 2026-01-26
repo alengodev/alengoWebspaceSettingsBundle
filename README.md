@@ -113,7 +113,8 @@ Adjust the blocks as needed in your project.
 ### Events
 The bundle dispatches the following events:
 - `WebspaceSettingsCreatedEvent`
-- `WebspaceSettingsUpdatedEvent`
+- `WebspaceSettingsModifiedEvent`
+- `WebspaceSettingsRemovedEvent`
 
 Create an event listener in your project to listen to these events and perform any necessary actions when webspace settings are created or updated.
 It is recommended to use the settings type `Event`.
