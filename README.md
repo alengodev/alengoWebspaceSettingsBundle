@@ -6,6 +6,7 @@ This Sulu bundle provides a way to manage such settings in a structured manner.
 
 ### Requirements
 
+* Sulu 2.6
 * PHP 8.2
 * Symfony >=7.2
 
@@ -113,6 +114,7 @@ Adjust the blocks as needed in your project.
 The bundle dispatches the following events:
 - `WebspaceSettingsCreatedEvent`
 - `WebspaceSettingsUpdatedEvent`
+- `WebspaceSettingsDeletedEvent`
 
 Create an event listener in your project to listen to these events and perform any necessary actions when webspace settings are created or updated.
 It is recommended to use the settings type `Event`.
