@@ -1,0 +1,4 @@
+alengo_webspace_settings_api:
+    resource: Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin\WebspaceSettingsController
+    type: attribute
+    name_prefix: alengo_webspace_settings.

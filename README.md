@@ -20,7 +20,7 @@ composer require alengo/alengo-webspace-settings-bundle
 
 ### Enable the bundle
 
-Enable the bundle by adding it to the list of registered bundles in the `config/bundles.php` file of your project:
+Enable the bundle by adding it to the list of registered bundles in the `/config/bundles.php` file of your project:
 
  ```php
  return [
@@ -35,23 +35,19 @@ bin/console do:sch:up --force
 
 ### Configure the Bundle
 
-Set the following config in your routes_admin.yaml
+Set the following config in your `/config/routes/sulu_admin.yaml`
 
  ```yaml
-alengo_webspace_settings_api:
-    type: attribute
-    resource: Alengo\Bundle\AlengoWebspaceSettingsBundle\Controller\Admin\WebspaceSettingsController
+AlengoWebspaceSettingsBundle:
+    resource: "@AlengoWebspaceSettingsBundle/config/routes_admin.yaml"
     prefix: /admin/api
-    name_prefix: alengo_webspace_settings.
  ```
 Make sure you've set the correct permissions in the Sulu backend for this bundle!
 `Settings > User Roles`
 
 ### Type Selection
 
-Set the property types you want to provide.
-
-config/packages/alengo_webspace_settings.yaml
+Set the property types you want to provide in `/config/packages/alengo_webspace_settings.yaml`
 
 ```yaml
 alengo_webspace_settings:
